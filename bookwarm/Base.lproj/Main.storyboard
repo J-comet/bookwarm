@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iES-cD-Esa">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iES-cD-Esa">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -78,7 +78,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqc-QB-liV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2737" y="-27"/>
+            <point key="canvasLocation" x="2966" y="-181"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="s92-lc-Omo">
+            <objects>
+                <viewController storyboardIdentifier="DetailViewController" id="obY-FE-xxi" customClass="DetailViewController" customModule="bookwarm" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dR6-Pz-Avp">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상세화면" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSx-NT-Buh">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="XeT-j5-ioU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="XeT-j5-ioU" firstAttribute="bottom" secondItem="GSx-NT-Buh" secondAttribute="bottom" id="5PY-yd-NOH"/>
+                            <constraint firstItem="XeT-j5-ioU" firstAttribute="trailing" secondItem="GSx-NT-Buh" secondAttribute="trailing" id="8u3-9V-1mU"/>
+                            <constraint firstItem="GSx-NT-Buh" firstAttribute="leading" secondItem="XeT-j5-ioU" secondAttribute="leading" id="9qH-sh-KOP"/>
+                            <constraint firstItem="GSx-NT-Buh" firstAttribute="top" secondItem="XeT-j5-ioU" secondAttribute="top" id="z2o-m1-IYZ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vzS-c4-2TK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2985" y="487"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="51M-Mm-oca">
