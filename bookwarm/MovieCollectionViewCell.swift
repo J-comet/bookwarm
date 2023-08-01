@@ -17,6 +17,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet var mainImageView: UIImageView!
     
     // 셀 생명주기 관련??
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // 셀 재사용 중 이미지가 뒤섞여나올 떄
+        mainImageView.image = UIImage(systemName: "ellipsis.circle.fill")
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // 스토리 기반, xib 등으로 셀을 다룰 경우메만 호출됨.

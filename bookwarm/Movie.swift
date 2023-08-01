@@ -13,4 +13,12 @@ struct Movie {
     var runtime: Int
     var overview: String
     var rate: Double
+    
+    var runtimeByHour: String {
+        get {
+            let hour = runtime / 60
+            let min = runtime % 60
+            return "상영시간: \(hour)시간\(min)분"
+        }
+    }
 }

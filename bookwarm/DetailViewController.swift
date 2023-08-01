@@ -11,13 +11,14 @@ class DetailViewController: UIViewController {
     
     static let identifier = "DetailViewController"
     
+    @IBOutlet var topRoundView: UIView!
     @IBOutlet var mainImageView: UIImageView!
-    @IBOutlet var infoLabel: UILabel!
     @IBOutlet var contentLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var runtimeLabel: UILabel!
+    @IBOutlet var rateLabel: UILabel!
     
-    var movieTitle = ""
-    var movieInfo = ""
-    var movieContent = ""
+    var movieData = Movie(title: "", releaseDate: "", runtime: 0, overview: "", rate: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +30,19 @@ class DetailViewController: UIViewController {
         )
         navigationItem.leftBarButtonItem?.tintColor = .black
         
+        designTopRoundView()
         desingMainImageView()
-        designInfoLabel()
+        designInfoLabel(outlet: runtimeLabel)
+        designInfoLabel(outlet: dateLabel)
+        designInfoLabel(outlet: rateLabel)
         designContentLabel()
         
-        title = movieTitle
-        infoLabel.text = movieInfo
-        contentLabel.text = movieContent
-        mainImageView.image = UIImage(named: movieTitle)
+        title = movieData.title
+        contentLabel.text = movieData.overview
+        mainImageView.image = UIImage(named: movieData.title)
+        runtimeLabel.text = movieData.runtimeByHour
+        dateLabel.text = "개봉일: " + movieData.releaseDate
+        rateLabel.text = "평점: \(movieData.rate)"
     }
 
     @objc
@@ -44,13 +50,18 @@ class DetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    private func designTopRoundView() {
+        topRoundView.layer.cornerRadius = 16
+        topRoundView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
+    
     private func desingMainImageView() {
         mainImageView.contentMode = .scaleAspectFill
     }
     
-    private func designInfoLabel() {
-        infoLabel.textColor = .lightGray
-        infoLabel.font = .systemFont(ofSize: 14)
+    private func designInfoLabel(outlet label: UILabel) {
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 12)
     }
     
     private func designContentLabel() {

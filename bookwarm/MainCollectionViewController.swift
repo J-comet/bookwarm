@@ -49,10 +49,10 @@ class MainCollectionViewController: UICollectionViewController, UIGestureRecogni
         
         let row = movieInfo.list[indexPath.row]
         
-        vc.movieTitle = row.title
-        vc.movieInfo = row.releaseDate
-        vc.movieContent = row.overview
-        
+        vc.movieData = row
+//        vc.movieTitle = row.title
+//        vc.movieInfo = row.info
+//        vc.movieContent = row.overview
         
         navigationController?.pushViewController(vc, animated: true)
     }
