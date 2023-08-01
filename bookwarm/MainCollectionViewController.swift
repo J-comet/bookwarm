@@ -9,7 +9,11 @@ import UIKit
 
 class MainCollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate {
 
-    let movieInfo = MovieInfo()
+    var movieInfo = MovieInfo() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +43,11 @@ class MainCollectionViewController: UICollectionViewController, UIGestureRecogni
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
+        
+        // 각 버튼마다 태그 추가
+        cell.likeButton.tag = indexPath.row
+        cell.likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        
         cell.configureCell(row: movieInfo.list[indexPath.row])
         return cell
     }
@@ -46,14 +55,8 @@ class MainCollectionViewController: UICollectionViewController, UIGestureRecogni
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as! DetailViewController
-        
         let row = movieInfo.list[indexPath.row]
-        
         vc.movieData = row
-//        vc.movieTitle = row.title
-//        vc.movieInfo = row.info
-//        vc.movieContent = row.overview
-        
         navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -71,6 +74,12 @@ class MainCollectionViewController: UICollectionViewController, UIGestureRecogni
         layout.minimumInteritemSpacing = spacing    // 셀과셀 좌 우 최소 간격
         
         collectionView.collectionViewLayout = layout  // layout 교체
+    }
+    
+    @objc func likeButtonClicked(_ sender: UIButton) {
+        // 버튼에 지정해둔 tag (indexPath.row) 로 해당값 찾기
+        movieInfo.list[sender.tag].isLike.toggle()
+//        collectionView.reloadData()
     }
 
 }

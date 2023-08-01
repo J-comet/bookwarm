@@ -18,7 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var runtimeLabel: UILabel!
     @IBOutlet var rateLabel: UILabel!
     
-    var movieData = Movie(title: "", releaseDate: "", runtime: 0, overview: "", rate: 0)
+    var movieData = Movie(title: "", releaseDate: "", runtime: 0, overview: "", rate: 0, isLike: false)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,16 @@ class DetailViewController: UIViewController {
             action: #selector(closeButtonClicked)
         )
         navigationItem.leftBarButtonItem?.tintColor = .black
+        
+        
+        let likeButtonImage = movieData.isLike ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: likeButtonImage,
+            style: .plain,
+            target: self,
+            action: nil)
+        navigationItem.rightBarButtonItem?.tintColor = .systemPink
         
         designTopRoundView()
         desingMainImageView()

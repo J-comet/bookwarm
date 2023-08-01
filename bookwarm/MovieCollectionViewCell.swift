@@ -15,6 +15,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var containerView: UIView!
     @IBOutlet var mainImageView: UIImageView!
+    @IBOutlet var likeButton: UIButton!
     
     // 셀 생명주기 관련??
     override func prepareForReuse() {
@@ -34,6 +35,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
         titleLabel.text = row.title
         rateLabel.text = "\(row.rate)"
         mainImageView.image = UIImage(named: row.title)
+        
+        if row.isLike {
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }
     }
     
     private func designCell() {

@@ -35,11 +35,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n0G-d8-cMK">
+                                <rect key="frame" x="30" y="48.333333333333343" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="GKe-eJ-rsH"/>
+                                    <constraint firstAttribute="height" constant="40" id="jHW-gO-wa9"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemPinkColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="heart" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="bNs-cA-LIK" secondAttribute="bottom" constant="20" id="JAq-xm-c7c"/>
+                            <constraint firstItem="n0G-d8-cMK" firstAttribute="top" secondItem="BZI-a0-PFK" secondAttribute="top" id="OuG-jr-jJT"/>
                             <constraint firstItem="uUx-VO-5lc" firstAttribute="leading" secondItem="mRl-lZ-zuW" secondAttribute="leading" constant="8" id="QPF-HP-kHM"/>
+                            <constraint firstItem="n0G-d8-cMK" firstAttribute="trailing" secondItem="BZI-a0-PFK" secondAttribute="leading" constant="-12" id="TsJ-sl-B5v"/>
                             <constraint firstAttribute="trailing" secondItem="BZI-a0-PFK" secondAttribute="trailing" constant="12" id="Y2q-WV-ctU"/>
                             <constraint firstItem="BZI-a0-PFK" firstAttribute="top" secondItem="uUx-VO-5lc" secondAttribute="bottom" constant="20" id="fHz-c5-5T3"/>
                             <constraint firstItem="uUx-VO-5lc" firstAttribute="top" secondItem="mRl-lZ-zuW" secondAttribute="top" constant="8" id="hRf-80-7ib"/>
@@ -61,6 +75,7 @@
             <size key="customSize" width="350" height="279"/>
             <connections>
                 <outlet property="containerView" destination="mRl-lZ-zuW" id="ccZ-Zm-Opd"/>
+                <outlet property="likeButton" destination="n0G-d8-cMK" id="Zt6-xD-m8Y"/>
                 <outlet property="mainImageView" destination="BZI-a0-PFK" id="lzD-6q-58y"/>
                 <outlet property="rateLabel" destination="bNs-cA-LIK" id="lti-xI-ksE"/>
                 <outlet property="titleLabel" destination="uUx-VO-5lc" id="cUU-fl-KjH"/>
@@ -69,8 +84,12 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="heart" catalog="system" width="128" height="107"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
