@@ -44,7 +44,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     private func designCell() {
-        containerView.backgroundColor = getRandomColor()
+        containerView.backgroundColor = UIColor.randomColor
         containerView.layer.cornerRadius = 12
         titleLabel.font = .boldSystemFont(ofSize: 16)
         titleLabel.textColor = .white
@@ -53,10 +53,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
         mainImageView.contentMode = .scaleAspectFit
     }
     
-    private func getRandomColor() -> UIColor {
-        let red = CGFloat.random(in: 50..<255)
-        let green = CGFloat.random(in: 50..<255)
-        let blue = CGFloat.random(in: 50..<255)
-        return UIColor(red:red/255.0, green:green/255.0, blue:blue/255.0, alpha:1.0)
-    }
+//    private func getRandomColor() -> UIColor {
+//        let red = CGFloat.random(in: 50..<255)
+//        let green = CGFloat.random(in: 50..<255)
+//        let blue = CGFloat.random(in: 50..<255)
+//        return UIColor(red:red/255.0, green:green/255.0, blue:blue/255.0, alpha:1.0)
+//    }
 }
