@@ -7,12 +7,15 @@
 
 import UIKit
 
-class MainCollectionViewController: UICollectionViewController {
+class MainCollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate {
 
     let movieInfo = MovieInfo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 네비컨트롤러 스와이프로 뒤로가기 활성화
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         let nib = UINib(nibName: MovieCollectionViewCell.identifier, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
@@ -43,7 +46,14 @@ class MainCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as! DetailViewController
-        vc.movieTitle = movieInfo.list[indexPath.row].title
+        
+        let row = movieInfo.list[indexPath.row]
+        
+        vc.movieTitle = row.title
+        vc.movieInfo = row.releaseDate
+        vc.movieContent = row.overview
+        
+        
         navigationController?.pushViewController(vc, animated: true)
     }
 
