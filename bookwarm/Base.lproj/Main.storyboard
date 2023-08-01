@@ -92,7 +92,7 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="1180"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gld-VY-Wm4">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="677.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="889.33333333333337"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Umc-Uz-dqh">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="525.33333333333337"/>
@@ -140,25 +140,39 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9GG-xV-hAj">
+                                                <rect key="frame" x="16" y="673.33333333333337" width="382" height="200"/>
+                                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="200" id="hXC-tQ-dpF"/>
+                                                </constraints>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="9GG-xV-hAj" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" constant="16" id="64G-Yo-HWQ"/>
                                             <constraint firstItem="n77-He-5GL" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" constant="16" id="97p-vS-WsB"/>
                                             <constraint firstItem="ItA-r9-ETo" firstAttribute="bottom" secondItem="Umc-Uz-dqh" secondAttribute="bottom" id="Due-eO-xBk"/>
                                             <constraint firstAttribute="trailing" secondItem="Fgy-yh-SAC" secondAttribute="trailing" constant="20" id="Fcu-w6-nvT"/>
+                                            <constraint firstAttribute="bottom" secondItem="9GG-xV-hAj" secondAttribute="bottom" constant="16" id="HIk-4L-gO4"/>
                                             <constraint firstAttribute="trailing" secondItem="Umc-Uz-dqh" secondAttribute="trailing" id="IUS-q1-mnf"/>
                                             <constraint firstItem="Fgy-yh-SAC" firstAttribute="top" secondItem="w9V-8I-6dR" secondAttribute="bottom" constant="20" id="JPU-g2-92Y"/>
+                                            <constraint firstAttribute="trailing" secondItem="9GG-xV-hAj" secondAttribute="trailing" constant="16" id="KWX-EG-V70"/>
                                             <constraint firstItem="GzY-7d-Qoy" firstAttribute="centerY" secondItem="w9V-8I-6dR" secondAttribute="centerY" id="KZa-f2-rg8"/>
                                             <constraint firstAttribute="trailing" secondItem="n77-He-5GL" secondAttribute="trailing" constant="16" id="LUq-bO-hjW"/>
                                             <constraint firstItem="PQD-7z-3Z2" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" constant="16" id="QtR-Rj-GmH"/>
                                             <constraint firstItem="w9V-8I-6dR" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" constant="16" id="S8t-Wq-RPG"/>
                                             <constraint firstItem="GzY-7d-Qoy" firstAttribute="leading" secondItem="w9V-8I-6dR" secondAttribute="trailing" constant="8" id="VZ4-ie-ZkC"/>
                                             <constraint firstAttribute="trailing" secondItem="ItA-r9-ETo" secondAttribute="trailing" id="YBN-1b-n3X"/>
-                                            <constraint firstAttribute="bottom" secondItem="Fgy-yh-SAC" secondAttribute="bottom" constant="20" id="bfy-pQ-b2s"/>
                                             <constraint firstItem="Umc-Uz-dqh" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" id="c3m-ea-ACH"/>
                                             <constraint firstItem="Umc-Uz-dqh" firstAttribute="top" secondItem="Gld-VY-Wm4" secondAttribute="top" id="dPw-Bp-ZUG"/>
                                             <constraint firstItem="w9V-8I-6dR" firstAttribute="top" secondItem="n77-He-5GL" secondAttribute="bottom" constant="16" id="eV7-jR-yPK"/>
                                             <constraint firstItem="ItA-r9-ETo" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" id="eoN-dT-gzP"/>
+                                            <constraint firstItem="9GG-xV-hAj" firstAttribute="top" secondItem="Fgy-yh-SAC" secondAttribute="bottom" constant="16" id="flM-rx-oAo"/>
                                             <constraint firstAttribute="trailing" secondItem="GzY-7d-Qoy" secondAttribute="trailing" constant="16" id="mcd-Gu-hoZ"/>
                                             <constraint firstItem="n77-He-5GL" firstAttribute="top" secondItem="PQD-7z-3Z2" secondAttribute="bottom" constant="8" id="uoM-oY-DJI"/>
                                             <constraint firstItem="PQD-7z-3Z2" firstAttribute="top" secondItem="Umc-Uz-dqh" secondAttribute="bottom" id="wPh-W5-iFl"/>
@@ -181,24 +195,34 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="XeT-j5-ioU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="XeT-j5-ioU" firstAttribute="trailing" secondItem="lT6-Rb-dgP" secondAttribute="trailing" id="7Nv-0h-oER"/>
                             <constraint firstItem="lT6-Rb-dgP" firstAttribute="leading" secondItem="XeT-j5-ioU" secondAttribute="leading" id="FiK-nF-m4e"/>
                             <constraint firstItem="XeT-j5-ioU" firstAttribute="bottom" secondItem="lT6-Rb-dgP" secondAttribute="bottom" id="TQf-vE-NNh"/>
                             <constraint firstItem="lT6-Rb-dgP" firstAttribute="top" secondItem="XeT-j5-ioU" secondAttribute="top" id="UgP-IJ-W67"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="OdN-lb-2GY" appends="YES" id="agO-50-76T"/>
+                        </connections>
                     </view>
                     <size key="freeformSize" width="414" height="1200"/>
                     <connections>
                         <outlet property="contentLabel" destination="Fgy-yh-SAC" id="u3n-Cu-Xcl"/>
                         <outlet property="dateLabel" destination="PQD-7z-3Z2" id="79d-fm-PEA"/>
                         <outlet property="mainImageView" destination="Umc-Uz-dqh" id="jnk-Ol-Lwr"/>
+                        <outlet property="movieTextView" destination="9GG-xV-hAj" id="Wva-Cl-Qka"/>
                         <outlet property="rateLabel" destination="GzY-7d-Qoy" id="F1m-UP-AEt"/>
                         <outlet property="runtimeLabel" destination="n77-He-5GL" id="8JI-RO-abj"/>
                         <outlet property="topRoundView" destination="ItA-r9-ETo" id="Gn2-Ya-EuE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vzS-c4-2TK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="OdN-lb-2GY">
+                    <connections>
+                        <action selector="tabGestureTabbed:" destination="obY-FE-xxi" id="SF0-vH-gbb"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2965" y="784"/>
         </scene>
@@ -224,11 +248,17 @@
     <resources>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
