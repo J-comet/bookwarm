@@ -14,6 +14,7 @@ struct Movie {
     var overview: String
     var rate: Double
     var isLike: Bool = false
+    var categoryList: [String] = []
     
     var runtimeByHour: String {
         get {

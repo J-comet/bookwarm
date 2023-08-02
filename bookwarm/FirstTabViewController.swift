@@ -24,23 +24,54 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
         headerCollectionView.dataSource = self
         headerCollectionView.delegate = self
         
-        let nib = UINib(nibName: FirstHeaderCollectionViewCell.identifier, bundle: nil)
-        headerCollectionView.register(nib, forCellWithReuseIdentifier: FirstHeaderCollectionViewCell.identifier)
+        mainTableView.separatorStyle = .none
+        mainTableView.rowHeight = 100
+        mainTableView.showsVerticalScrollIndicator = false
+        mainTableView.sectionHeaderTopPadding = 16
+        
+        let tableNib = UINib(nibName: FirstTableViewCell.identifier, bundle: nil)
+        mainTableView.register(tableNib, forCellReuseIdentifier: FirstTableViewCell.identifier)
+        
+        let headerNib = UINib(nibName: FirstHeaderCollectionViewCell.identifier, bundle: nil)
+        headerCollectionView.register(headerNib, forCellWithReuseIdentifier: FirstHeaderCollectionViewCell.identifier)
         
         configureHeaderView()
     }
     
     // 테이블뷰 연결
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return movieInfo.list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        //        guard let cell else { return UITableViewCell()}
-        
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FirstTableViewCell.identifier, for: indexPath) as? FirstTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.configureCell(row: movieInfo.list[indexPath.row])
+        return cell
     }
+    
+    // 섹션별로 타이틀 지정
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "요즘 인기 작품" : nil
+    }
+    
+    // 테이블뷰 섹션 텍스트 스타일
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+//        view.tintColor = .red  // 섹션의 백그라운드 컬러가 변경됨
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        header.textLabel?.textColor = .black
+        header.textLabel?.font = .boldSystemFont(ofSize: 17)
+//        header.textLabel?.frame = header.frame(forAlignmentRect: CGRect(x: 16, y: 0, width: 110, height: 21))
+//        header.textLabel?.textAlignment = .center
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        moveDetailVC(row: movieInfo.list[indexPath.row])
+        tableView.reloadRows(at: [indexPath], with: .fade)
+    }
+    // end 테이블뷰
     
     
     // 컬렉션뷰 연결
@@ -61,10 +92,8 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        recentArticleItemClicked(row: movieInfo.list[indexPath.row])
+        moveDetailVC(row: movieInfo.list[indexPath.row])
     }
-    
-    
     
     private func configureHeaderView() {
         let layout = UICollectionViewFlowLayout()
@@ -84,7 +113,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
         headerCollectionView.collectionViewLayout = layout
     }
     
-    private func recentArticleItemClicked(row: Movie) {
+    private func moveDetailVC(row: Movie) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as! DetailViewController
         vc.movieData = row

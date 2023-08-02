@@ -18,6 +18,8 @@
 		C015695B2A77A0E3008685C2 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C015695A2A77A0E3008685C2 /* SearchViewController.swift */; };
 		C021B0112A7A42E000E096EC /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C021B00F2A7A42E000E096EC /* HeaderCollectionReusableView.swift */; };
 		C021B0122A7A42E000E096EC /* HeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C021B0102A7A42E000E096EC /* HeaderCollectionReusableView.xib */; };
+		C021B0152A7A944F00E096EC /* FirstTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C021B0132A7A944F00E096EC /* FirstTableViewCell.swift */; };
+		C021B0162A7A944F00E096EC /* FirstTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C021B0142A7A944F00E096EC /* FirstTableViewCell.xib */; };
 		C0EAD3842A77A95100A289BA /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EAD3832A77A95100A289BA /* Movie.swift */; };
 		C0EAD3862A77A96D00A289BA /* MovieInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EAD3852A77A96D00A289BA /* MovieInfo.swift */; };
 		C0EAD3882A77DE7D00A289BA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EAD3872A77DE7D00A289BA /* DetailViewController.swift */; };
@@ -41,6 +43,8 @@
 		C015695A2A77A0E3008685C2 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = bookwarm/ViewController/SearchViewController.swift; sourceTree = SOURCE_ROOT; };
 		C021B00F2A7A42E000E096EC /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HeaderCollectionReusableView.swift; path = bookwarm/HeaderCollectionReusableView.swift; sourceTree = SOURCE_ROOT; };
 		C021B0102A7A42E000E096EC /* HeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = HeaderCollectionReusableView.xib; path = bookwarm/HeaderCollectionReusableView.xib; sourceTree = SOURCE_ROOT; };
+		C021B0132A7A944F00E096EC /* FirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FirstTableViewCell.swift; path = bookwarm/ViewController/FirstTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		C021B0142A7A944F00E096EC /* FirstTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FirstTableViewCell.xib; path = bookwarm/ViewController/FirstTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		C0EAD3832A77A95100A289BA /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		C0EAD3852A77A96D00A289BA /* MovieInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfo.swift; sourceTree = "<group>"; };
 		C0EAD3872A77DE7D00A289BA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		C0EAD3B72A7A276F00A289BA /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				C021B0132A7A944F00E096EC /* FirstTableViewCell.swift */,
+				C021B0142A7A944F00E096EC /* FirstTableViewCell.xib */,
 				C021B00F2A7A42E000E096EC /* HeaderCollectionReusableView.swift */,
 				C021B0102A7A42E000E096EC /* HeaderCollectionReusableView.xib */,
 				C01569562A779BF2008685C2 /* MovieCollectionViewCell.swift */,
@@ -186,6 +192,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C015694B2A77998E008685C2 /* LaunchScreen.storyboard in Resources */,
+				C021B0162A7A944F00E096EC /* FirstTableViewCell.xib in Resources */,
 				C01569482A77998E008685C2 /* Assets.xcassets in Resources */,
 				C021B0122A7A42E000E096EC /* HeaderCollectionReusableView.xib in Resources */,
 				C0EAD3BD2A7A2D9100A289BA /* FirstHeaderCollectionViewCell.xib in Resources */,
@@ -206,6 +213,7 @@
 				C0EAD3862A77A96D00A289BA /* MovieInfo.swift in Sources */,
 				C015695B2A77A0E3008685C2 /* SearchViewController.swift in Sources */,
 				C021B0112A7A42E000E096EC /* HeaderCollectionReusableView.swift in Sources */,
+				C021B0152A7A944F00E096EC /* FirstTableViewCell.swift in Sources */,
 				C015693F2A77998D008685C2 /* AppDelegate.swift in Sources */,
 				C0EAD3842A77A95100A289BA /* Movie.swift in Sources */,
 				C01569532A779B92008685C2 /* MainCollectionViewController.swift in Sources */,
