@@ -68,7 +68,12 @@ class DetailViewController: UIViewController {
     }
     
     @objc func closeButtonClicked(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
+        if navigationController?.presentingViewController != nil {
+            // Navigation controller is being presented modally
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     // 키보드 올라올 때

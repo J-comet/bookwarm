@@ -64,7 +64,7 @@ class MainCollectionViewController: UICollectionViewController, UIGestureRecogni
     private func setCollectionViewLayout() {
         // 비율 계산해서 디바이스 별로 UI 설정
         let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 12
+        let spacing: CGFloat = 8
         let count: CGFloat = 2
         let width: CGFloat = UIScreen.main.bounds.width - (spacing * (count + 1)) // 디바이스 너비 계산
         

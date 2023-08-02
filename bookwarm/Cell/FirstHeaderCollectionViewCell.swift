@@ -15,12 +15,18 @@ class FirstHeaderCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        headerImageView.contentMode = .scaleAspectFill
+        designCell()
     }
     
     func configureCell(row: Movie) {
-        print(row.title)
         headerImageView.image = UIImage(named: row.title)
+    }
+    
+    private func designCell() {
+        headerImageView.contentMode = .scaleAspectFill
+        self.backgroundColor = .clear
+        contentView.layer.cornerRadius = 12
+        contentView.layer.masksToBounds = true
     }
 
 }
