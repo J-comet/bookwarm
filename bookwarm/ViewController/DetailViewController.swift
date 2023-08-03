@@ -10,6 +10,7 @@ import UIKit
 class DetailViewController: UIViewController {
     
     static let identifier = "DetailViewController"
+    static let placeHolderText = "리뷰를 남겨주세요"
     
     @IBOutlet var topRoundView: UIView!
     @IBOutlet var mainImageView: UIImageView!
@@ -19,10 +20,12 @@ class DetailViewController: UIViewController {
     @IBOutlet var rateLabel: UILabel!
     
     @IBOutlet var movieTextView: UITextView!
-    
+
     var movieData = Movie(title: "", releaseDate: "", runtime: 0, overview: "", rate: 0, isLike: false)
     
     var keyHeight: CGFloat?
+    
+//    let moviePlaceHolder = "리뷰를 남겨주세요"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +64,10 @@ class DetailViewController: UIViewController {
         runtimeLabel.text = movieData.runtimeByHour
         dateLabel.text = "개봉일: " + movieData.releaseDate
         rateLabel.text = "평점: \(movieData.rate)"
+        
+        movieTextView.delegate = self
+        movieTextView.text = DetailViewController.placeHolderText
+        movieTextView.textColor = .lightGray
     }
     
     @IBAction func tabGestureTabbed(_ sender: UITapGestureRecognizer) {
@@ -112,5 +119,36 @@ class DetailViewController: UIViewController {
         contentLabel.numberOfLines = 0
         contentLabel.textColor = .black
         contentLabel.font = .systemFont(ofSize: 16)
+    }
+}
+
+extension DetailViewController: UITextViewDelegate {
+    
+    // 텍스트뷰에 값이 바뀔 때마다 출력 ( ex) 글자수 체크 )
+    func textViewDidChange(_ textView: UITextView) {
+        print(textView.text.count)
+//        title = "\(textView.text.count) 자"
+    }
+    
+    // TextView 내에 placeholder 같은 기능 만들기
+    
+    // 편집이 시작될 때 (커서가 시작될 때)
+    // 플레이스홀더와 텍스트뷰 글자가 같다면 clear, color
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        print(#function)
+        if textView.text == DetailViewController.placeHolderText {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    // 편집이 끝날 때 (커서가 없어지는 순간)
+    // 사용자가 아무 글자도 안썼으면 플레이스 홀더 글자 보이게 설정
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print(#function)
+        if textView.text.isEmpty {
+            textView.text = DetailViewController.placeHolderText
+            textView.textColor = .lightGray
+        }
     }
 }
