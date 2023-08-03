@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var runtimeLabel: UILabel!
     @IBOutlet var rateLabel: UILabel!
+    @IBOutlet var countLabel: UILabel!
     
     @IBOutlet var movieTextView: UITextView!
 
@@ -68,6 +69,8 @@ class DetailViewController: UIViewController {
         movieTextView.delegate = self
         movieTextView.text = DetailViewController.placeHolderText
         movieTextView.textColor = .lightGray
+        
+        countLabel.text = "0 / 10"
     }
     
     @IBAction func tabGestureTabbed(_ sender: UITapGestureRecognizer) {
@@ -127,7 +130,11 @@ extension DetailViewController: UITextViewDelegate {
     // 텍스트뷰에 값이 바뀔 때마다 출력 ( ex) 글자수 체크 )
     func textViewDidChange(_ textView: UITextView) {
         print(textView.text.count)
-//        title = "\(textView.text.count) 자"
+        if textView.text.count > 10 {
+            let currentText = String(Array(textView.text).dropLast())
+            textView.text = currentText
+        }
+        countLabel.text = "\(textView.text.count) / 10"
     }
     
     // TextView 내에 placeholder 같은 기능 만들기
