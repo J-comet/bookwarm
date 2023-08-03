@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--고래밥의 책장-->
+        <!--Main Collection View Controller-->
         <scene sceneID="Mk4-eT-3K6">
             <objects>
                 <collectionViewController storyboardIdentifier="MainCollectionViewController" id="e5W-Q4-qJV" customClass="MainCollectionViewController" customModule="bookwarm" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,18 +38,11 @@
                             <outlet property="delegate" destination="e5W-Q4-qJV" id="R9v-VS-SLa"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="고래밥의 책장" id="21R-ta-QmU">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="CGV-Ym-1r8">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="searchBarItemClicked:" destination="e5W-Q4-qJV" id="ba2-Wh-EQg"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="21R-ta-QmU"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lJw-cW-wP8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1774.8091603053435" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="2517" y="697"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="SEN-bA-LA7">
@@ -78,7 +71,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bqc-QB-liV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2966" y="-181"/>
+            <point key="canvasLocation" x="3297" y="695"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="s92-lc-Omo">
@@ -226,10 +219,11 @@
             </objects>
             <point key="canvasLocation" x="3386" y="1647"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item-->
         <scene sceneID="51M-Mm-oca">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="P5k-Oc-a3D" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="f8k-Ls-HEd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pBm-GK-W0W">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -242,7 +236,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZnX-Jr-oZh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="848.09160305343505" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="1590" y="697"/>
         </scene>
         <!--First Tab View Controller-->
         <scene sceneID="6FV-HA-NB1">
@@ -331,23 +325,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sN2-eH-plN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1589.8550724637682" y="2141.576086956522"/>
-        </scene>
-        <!--3번-->
-        <scene sceneID="4ZS-VB-ew6">
-            <objects>
-                <viewController id="Exh-V3-0Zn" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vV5-Ne-U02">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="zDZ-ma-Dcx"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="3번" image="lasso" catalog="system" id="mi6-EZ-oZb"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3Km-tT-wOE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1589.8550724637682" y="2845.9239130434785"/>
+            <point key="canvasLocation" x="1606" y="2346"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Knc-Ck-IpY">
@@ -360,14 +338,14 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="QTm-4v-dnt" kind="relationship" relationship="viewControllers" id="Oya-wk-PF6"/>
-                        <segue destination="b2P-pb-DYT" kind="relationship" relationship="viewControllers" id="4O6-DP-ZUf"/>
-                        <segue destination="Exh-V3-0Zn" kind="relationship" relationship="viewControllers" id="ERb-cO-KTY"/>
+                        <segue destination="P5k-Oc-a3D" kind="relationship" relationship="viewControllers" id="ThS-8I-bCo"/>
+                        <segue destination="QTm-4v-dnt" kind="relationship" relationship="viewControllers" id="Q73-gO-q1n"/>
+                        <segue destination="b2P-pb-DYT" kind="relationship" relationship="viewControllers" id="pyH-Z9-Ggj"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6UG-2a-sNi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-617" y="2116"/>
+            <point key="canvasLocation" x="371" y="1458"/>
         </scene>
         <!--1번-->
         <scene sceneID="aHc-7q-hFA">
@@ -390,8 +368,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lasso" catalog="system" width="128" height="121"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="star.square.on.square" catalog="system" width="128" height="116"/>
