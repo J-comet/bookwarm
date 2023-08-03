@@ -65,9 +65,6 @@ class MainCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("1234")
-//        self.collectionView.endEditing(true)
-        
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as! DetailViewController
         let row = searchList[indexPath.row]
@@ -94,8 +91,12 @@ class MainCollectionViewController: UICollectionViewController {
     
     @objc func likeButtonClicked(_ sender: UIButton) {
         // 버튼에 지정해둔 tag (indexPath.row) 로 해당값 찾기
-        searchList[sender.tag].isLike.toggle()
-        //        collectionView.reloadData()
+        for i in 0...movieInfo.list.count - 1 {
+            if i == sender.tag {
+                movieInfo.list[i].isLike.toggle()
+                searchList[i].isLike.toggle()
+            }
+        }
     }
     
     private func searchAction() {
