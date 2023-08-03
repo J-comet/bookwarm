@@ -135,11 +135,10 @@
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9GG-xV-hAj">
                                                 <rect key="frame" x="16" y="673.33333333333337" width="382" height="200"/>
-                                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="200" id="hXC-tQ-dpF"/>
                                                 </constraints>
-                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <color key="textColor" systemColor="labelColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -219,11 +218,11 @@
             </objects>
             <point key="canvasLocation" x="3386" y="1647"/>
         </scene>
-        <!--Item-->
+        <!--홈-->
         <scene sceneID="51M-Mm-oca">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="P5k-Oc-a3D" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="f8k-Ls-HEd"/>
+                    <tabBarItem key="tabBarItem" title="홈" image="homekit" catalog="system" id="f8k-Ls-HEd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pBm-GK-W0W">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -347,11 +346,11 @@
             </objects>
             <point key="canvasLocation" x="371" y="1458"/>
         </scene>
-        <!--1번-->
+        <!--둘러보기-->
         <scene sceneID="aHc-7q-hFA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QTm-4v-dnt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="1번" image="star.square.on.square" catalog="system" id="aDj-ef-Lhi"/>
+                    <tabBarItem key="tabBarItem" title="둘러보기" image="star.square.on.square" catalog="system" id="aDj-ef-Lhi"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9EI-vv-q5P">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
@@ -368,6 +367,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="homekit" catalog="system" width="128" height="104"/>
         <image name="square.and.arrow.up.fill" catalog="system" width="115" height="128"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <image name="star.square.on.square" catalog="system" width="128" height="116"/>
@@ -380,8 +380,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
