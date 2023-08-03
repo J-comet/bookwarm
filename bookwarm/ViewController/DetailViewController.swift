@@ -88,7 +88,9 @@ class DetailViewController: UIViewController {
     
     // 키보드 사라질 때
     @objc func keyboardWillHide(_ sender: Notification) {
-          self.view.frame.size.height += keyHeight!
+        if let keyHeight {
+            self.view.frame.size.height += keyHeight
+        }
       }
     
     private func designTopRoundView() {
