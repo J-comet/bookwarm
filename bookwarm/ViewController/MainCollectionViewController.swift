@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainCollectionViewController: UICollectionViewController, UIGestureRecognizerDelegate {
+class MainCollectionViewController: UICollectionViewController {
     
     //    var movieInfo = MovieInfo() {
     //        didSet {
@@ -132,4 +132,8 @@ extension MainCollectionViewController: UISearchBarDelegate {
         }
     }
     
+}
+
+extension MainCollectionViewController: UIGestureRecognizerDelegate {
+    // 네비컨트롤러 스와이프로 뒤로가기 활성화
 }
