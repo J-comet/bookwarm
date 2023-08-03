@@ -143,6 +143,12 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xuU-s3-m36">
+                                                <rect key="frame" x="384" y="859.33333333333337" width="0.0" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -160,10 +166,12 @@
                                             <constraint firstItem="w9V-8I-6dR" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" constant="16" id="S8t-Wq-RPG"/>
                                             <constraint firstItem="GzY-7d-Qoy" firstAttribute="leading" secondItem="w9V-8I-6dR" secondAttribute="trailing" constant="8" id="VZ4-ie-ZkC"/>
                                             <constraint firstAttribute="trailing" secondItem="ItA-r9-ETo" secondAttribute="trailing" id="YBN-1b-n3X"/>
+                                            <constraint firstAttribute="bottom" secondItem="xuU-s3-m36" secondAttribute="bottom" constant="30" id="atu-Nv-JBy"/>
                                             <constraint firstItem="Umc-Uz-dqh" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" id="c3m-ea-ACH"/>
                                             <constraint firstItem="Umc-Uz-dqh" firstAttribute="top" secondItem="Gld-VY-Wm4" secondAttribute="top" id="dPw-Bp-ZUG"/>
                                             <constraint firstItem="w9V-8I-6dR" firstAttribute="top" secondItem="n77-He-5GL" secondAttribute="bottom" constant="16" id="eV7-jR-yPK"/>
                                             <constraint firstItem="ItA-r9-ETo" firstAttribute="leading" secondItem="Gld-VY-Wm4" secondAttribute="leading" id="eoN-dT-gzP"/>
+                                            <constraint firstAttribute="trailing" secondItem="xuU-s3-m36" secondAttribute="trailing" constant="30" id="fXX-cz-AsH"/>
                                             <constraint firstItem="9GG-xV-hAj" firstAttribute="top" secondItem="Fgy-yh-SAC" secondAttribute="bottom" constant="16" id="flM-rx-oAo"/>
                                             <constraint firstAttribute="trailing" secondItem="GzY-7d-Qoy" secondAttribute="trailing" constant="16" id="mcd-Gu-hoZ"/>
                                             <constraint firstItem="n77-He-5GL" firstAttribute="top" secondItem="PQD-7z-3Z2" secondAttribute="bottom" constant="8" id="uoM-oY-DJI"/>
@@ -201,6 +209,7 @@
                     <size key="freeformSize" width="414" height="1200"/>
                     <connections>
                         <outlet property="contentLabel" destination="Fgy-yh-SAC" id="u3n-Cu-Xcl"/>
+                        <outlet property="countLabel" destination="xuU-s3-m36" id="OLc-g3-0GJ"/>
                         <outlet property="dateLabel" destination="PQD-7z-3Z2" id="79d-fm-PEA"/>
                         <outlet property="mainImageView" destination="Umc-Uz-dqh" id="jnk-Ol-Lwr"/>
                         <outlet property="movieTextView" destination="9GG-xV-hAj" id="Wva-Cl-Qka"/>
