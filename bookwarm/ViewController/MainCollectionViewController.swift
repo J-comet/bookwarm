@@ -9,8 +9,6 @@ import UIKit
 
 class MainCollectionViewController: UICollectionViewController, BaseViewControllerProtocol {
     
-//    var movieInfo = MovieInfo()
-    
     let searchBar = UISearchBar()
     
     var searchList: [Movie] = [] {
@@ -27,7 +25,25 @@ class MainCollectionViewController: UICollectionViewController, BaseViewControll
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        searchList = MovieInfo.list
+        
+        // 검색어가 있을 때는 검색어가 포함된 영화만 보여주기
+        searchList.removeAll()
+        if let count = searchBar.text?.count {
+            if count > 0 {
+                for movie in MovieInfo.list {
+                    if movie.title.contains(searchBar.text!) {
+                        searchList.append(movie)
+                    }
+                }
+            } else {
+                searchList = MovieInfo.list
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchBar.endEditing(true)
     }
     
     func designVC() {
@@ -78,7 +94,7 @@ class MainCollectionViewController: UICollectionViewController, BaseViewControll
         let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as! DetailViewController
         let row = searchList[indexPath.row]
         vc.movieData = row
-
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -128,6 +144,7 @@ extension MainCollectionViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchAction()
+        searchBar.endEditing(true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
