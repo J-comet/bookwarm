@@ -8,7 +8,7 @@
 import Foundation
 
 struct Movie {
-    var title: String
+    let title: String
     var releaseDate: String
     var runtime: Int
     var overview: String

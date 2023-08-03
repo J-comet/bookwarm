@@ -36,8 +36,6 @@ class DetailViewController: UIViewController, BaseViewControllerProtocol {
     func configNavigationBar() {
         title = movieData.title
         
-        let likeButtonImage = movieData.isLike ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.backward"),
             style: .plain,
@@ -45,12 +43,14 @@ class DetailViewController: UIViewController, BaseViewControllerProtocol {
             action: #selector(closeButtonClicked)
         )
         navigationItem.leftBarButtonItem?.tintColor = .black
+
+        let likeButtonImage = movieData.isLike ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: likeButtonImage,
             style: .plain,
             target: self,
-            action: nil)
+            action: #selector(likeButtonClicked))
         navigationItem.rightBarButtonItem?.tintColor = .systemPink
     }
     
@@ -89,6 +89,15 @@ class DetailViewController: UIViewController, BaseViewControllerProtocol {
             dismiss(animated: true)
         } else {
             navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc func likeButtonClicked(_ sender: UIBarButtonItem) {
+        for i in 0...MovieInfo.list.count - 1 {
+            if MovieInfo.list[i].title == movieData.title {
+                MovieInfo.list[i].isLike.toggle()
+                navigationItem.rightBarButtonItem?.image = MovieInfo.list[i].isLike ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+            }
         }
     }
     

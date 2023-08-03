@@ -21,9 +21,13 @@ class MainCollectionViewController: UICollectionViewController, BaseViewControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         designVC()
         configVC()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchList = MovieInfo.list
     }
     
     func designVC() {
@@ -41,8 +45,6 @@ class MainCollectionViewController: UICollectionViewController, BaseViewControll
         searchBar.showsCancelButton = true
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-        
-        searchList = MovieInfo.list
     }
     
     //    @IBAction func searchBarItemClicked(_ sender: UIBarButtonItem) {
