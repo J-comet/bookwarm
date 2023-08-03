@@ -8,12 +8,7 @@
 import UIKit
 
 class MainCollectionViewController: UICollectionViewController {
-    
-    //    var movieInfo = MovieInfo() {
-    //        didSet {
-    //            collectionView.reloadData()
-    //        }
-    //    }
+
     
     var movieInfo = MovieInfo()
     
