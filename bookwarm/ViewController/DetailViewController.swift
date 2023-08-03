@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, BaseViewControllerProtocol {
     
     static let identifier = "DetailViewController"
     static let placeHolderText = "리뷰를 남겨주세요"
@@ -26,13 +26,17 @@ class DetailViewController: UIViewController {
     
     var keyHeight: CGFloat?
     
-//    let moviePlaceHolder = "리뷰를 남겨주세요"
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configNavigationBar()
+        designVC()
+        configVC()
+    }
+    
+    func configNavigationBar() {
+        title = movieData.title
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let likeButtonImage = movieData.isLike ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "chevron.backward"),
@@ -42,24 +46,24 @@ class DetailViewController: UIViewController {
         )
         navigationItem.leftBarButtonItem?.tintColor = .black
         
-        
-        let likeButtonImage = movieData.isLike ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: likeButtonImage,
             style: .plain,
             target: self,
             action: nil)
         navigationItem.rightBarButtonItem?.tintColor = .systemPink
-        
+    }
+    
+    func designVC() {
         designTopRoundView()
         desingMainImageView()
         designInfoLabel(outlet: runtimeLabel)
         designInfoLabel(outlet: dateLabel)
         designInfoLabel(outlet: rateLabel)
         designContentLabel()
-        
-        title = movieData.title
+    }
+    
+    func configVC() {
         contentLabel.text = movieData.overview
         mainImageView.image = UIImage(named: movieData.title)
         runtimeLabel.text = movieData.runtimeByHour
@@ -70,6 +74,8 @@ class DetailViewController: UIViewController {
         movieTextView.text = DetailViewController.placeHolderText
         movieTextView.textColor = .lightGray
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         countLabel.text = "0 / 10"
     }
     

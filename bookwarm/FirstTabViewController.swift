@@ -12,7 +12,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet var headerCollectionView: UICollectionView!
     @IBOutlet var mainTableView: UITableView!
     
-    var movieInfo = MovieInfo()
+//    var movieInfo = MovieInfo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // 테이블뷰 연결
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movieInfo.list.count
+        return MovieInfo.list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,7 +48,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FirstTableViewCell.identifier, for: indexPath) as? FirstTableViewCell else {
             return UITableViewCell()
         }
-        cell.configureCell(row: movieInfo.list[indexPath.row])
+        cell.configureCell(row: MovieInfo.list[indexPath.row])
         return cell
     }
     
@@ -68,7 +68,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moveDetailVC(row: movieInfo.list[indexPath.row])
+        moveDetailVC(row: MovieInfo.list[indexPath.row])
         tableView.reloadRows(at: [indexPath], with: .fade)
     }
     // end 테이블뷰
@@ -76,7 +76,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // 컬렉션뷰 연결
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieInfo.list.count
+        return MovieInfo.list.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -84,7 +84,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FirstHeaderCollectionViewCell.identifier, for: indexPath) as? FirstHeaderCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configureCell(row: movieInfo.list[indexPath.row])
+            cell.configureCell(row: MovieInfo.list[indexPath.row])
             return cell
         } else {
             return UICollectionViewCell()
@@ -92,7 +92,7 @@ class FirstTabViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        moveDetailVC(row: movieInfo.list[indexPath.row])
+        moveDetailVC(row: MovieInfo.list[indexPath.row])
     }
     
     private func configureHeaderView() {

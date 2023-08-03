@@ -7,10 +7,9 @@
 
 import UIKit
 
-class MainCollectionViewController: UICollectionViewController {
-
+class MainCollectionViewController: UICollectionViewController, BaseViewControllerProtocol {
     
-    var movieInfo = MovieInfo()
+//    var movieInfo = MovieInfo()
     
     let searchBar = UISearchBar()
     
@@ -23,19 +22,27 @@ class MainCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        designVC()
+        configVC()
+    }
+    
+    func designVC() {
+        setCollectionViewLayout()
+    }
+    
+    func configVC() {
         // 네비컨트롤러 스와이프로 뒤로가기 활성화
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         let nib = UINib(nibName: MovieCollectionViewCell.identifier, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-        setCollectionViewLayout()
         
         // searchBar 기능 추가
         searchBar.showsCancelButton = true
         navigationItem.titleView = searchBar
         searchBar.delegate = self
         
-        searchList = movieInfo.list
+        searchList = MovieInfo.list
     }
     
     //    @IBAction func searchBarItemClicked(_ sender: UIBarButtonItem) {
@@ -91,9 +98,9 @@ class MainCollectionViewController: UICollectionViewController {
     
     @objc func likeButtonClicked(_ sender: UIButton) {
         // 버튼에 지정해둔 tag (indexPath.row) 로 해당값 찾기
-        for i in 0...movieInfo.list.count - 1 {
+        for i in 0...MovieInfo.list.count - 1 {
             if i == sender.tag {
-                movieInfo.list[i].isLike.toggle()
+                MovieInfo.list[i].isLike.toggle()
                 searchList[i].isLike.toggle()
             }
         }
@@ -101,7 +108,7 @@ class MainCollectionViewController: UICollectionViewController {
     
     private func searchAction() {
         searchList.removeAll()
-        for movie in movieInfo.list {
+        for movie in MovieInfo.list {
             if movie.title.uppercased().contains(searchBar.text!) {
                 searchList.append(movie)
             }
@@ -114,7 +121,7 @@ extension MainCollectionViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
-        searchList = movieInfo.list
+        searchList = MovieInfo.list
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -124,7 +131,7 @@ extension MainCollectionViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchAction()
         if searchText.count == 0 {
-            searchList = movieInfo.list
+            searchList = MovieInfo.list
         }
     }
     
