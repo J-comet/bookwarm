@@ -27,14 +27,12 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callRequest(searchText: "korea")
-        
         designVC()
         configVC()
     }
     
     func designVC() {
-        
+        setCollectionViewLayout()
     }
     
     func configVC() {
@@ -45,11 +43,13 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         
         bookCollectionView.dataSource = self
         bookCollectionView.delegate = self
+        
+        let nib = UINib(nibName: BookCollectionViewCell.identifier, bundle: nil)
+        bookCollectionView.register(nib, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
     }
     
     private func callRequest(searchText: String) {
-//        let text = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        
+
         let parameters = ["query": searchText]
         
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: header)
@@ -60,35 +60,76 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
                 let json = JSON(value)
                 print(json)
                 
+                for item in json["documents"].arrayValue {
+                    
+                    var authors: [String] = []
+                    
+                    for author in item["authors"].arrayValue {
+                        authors.append(author.stringValue)
+                    }
+                    
+                    let book = Book(
+                        authors: authors,
+                        title: item["title"].stringValue,
+                        contents: item["contents"].stringValue,
+                        thumbnail: item["thumbnail"].stringValue,
+                        salePrice: item["sale_price"].intValue
+                    )
+                    
+                    self.searchList.append(book)
+                }
+                
             case .failure(let error):
                 print(error)
             }
         }
+    }
+    
+    private func setCollectionViewLayout() {
+        // 비율 계산해서 디바이스 별로 UI 설정
+        let layout = UICollectionViewFlowLayout()
+        let spacing: CGFloat = 8
+        let count: CGFloat = 2
+        let width: CGFloat = UIScreen.main.bounds.width - (spacing * (count + 1)) // 디바이스 너비 계산
+        
+        layout.itemSize = CGSize(width: width / count, height: width / count)
+        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)  // 컨텐츠가 잘리지 않고 자연스럽게 표시되도록 여백설정
+        layout.minimumLineSpacing = spacing         // 셀과셀 위 아래 최소 간격
+        layout.minimumInteritemSpacing = spacing    // 셀과셀 좌 우 최소 간격
+        
+        bookCollectionView.collectionViewLayout = layout  // layout 교체
     }
 }
 
 extension BookViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
+        searchList.removeAll()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-  
+        searchList.removeAll()
+        callRequest(searchText: searchBar.text!)
         searchBar.endEditing(true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 실시간 검색 기능
+//        callRequest(searchText: searchText)
     }
+    
 }
 
 extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        return searchList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as! BookCollectionViewCell
+        
+        cell.configureCell(row: searchList[indexPath.row])
+        return cell
     }
     
     
