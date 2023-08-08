@@ -9,7 +9,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class BookViewController: UIViewController {
+class BookViewController: UIViewController, BaseViewControllerProtocol {
     
     static let identifier = "BookViewController"
     
@@ -27,13 +27,24 @@ class BookViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        callRequest(searchText: "korea")
         
+        designVC()
+        configVC()
+    }
+    
+    func designVC() {
+        
+    }
+    
+    func configVC() {
         // searchBar 기능 추가
         searchBar.showsCancelButton = true
         navigationItem.titleView = searchBar
         searchBar.delegate = self
         
-        callRequest(searchText: "korea")
+        bookCollectionView.dataSource = self
+        bookCollectionView.delegate = self
     }
     
     private func callRequest(searchText: String) {
@@ -54,7 +65,6 @@ class BookViewController: UIViewController {
             }
         }
     }
-
 }
 
 extension BookViewController: UISearchBarDelegate {
@@ -70,4 +80,16 @@ extension BookViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 실시간 검색 기능
     }
+}
+
+extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    
 }

@@ -12,4 +12,5 @@ struct Book {
     var title: String
     var contents: String
     var thumbnail: String
+    var price: Int
 }
