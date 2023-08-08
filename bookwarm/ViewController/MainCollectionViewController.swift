@@ -7,15 +7,7 @@
 
 import UIKit
 
-class MainCollectionViewController: UICollectionViewController {
-    
-    //    var movieInfo = MovieInfo() {
-    //        didSet {
-    //            collectionView.reloadData()
-    //        }
-    //    }
-    
-    var movieInfo = MovieInfo()
+class MainCollectionViewController: UICollectionViewController, BaseViewControllerProtocol {
     
     let searchBar = UISearchBar()
     
@@ -27,20 +19,48 @@ class MainCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        designVC()
+        configVC()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        // 검색어가 있을 때는 검색어가 포함된 영화만 보여주기
+        searchList.removeAll()
+        if let count = searchBar.text?.count {
+            if count > 0 {
+                for movie in MovieInfo.list {
+                    if movie.title.contains(searchBar.text!) {
+                        searchList.append(movie)
+                    }
+                }
+            } else {
+                searchList = MovieInfo.list
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchBar.endEditing(true)
+    }
+    
+    func designVC() {
+        setCollectionViewLayout()
+    }
+    
+    func configVC() {
         // 네비컨트롤러 스와이프로 뒤로가기 활성화
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         
         let nib = UINib(nibName: MovieCollectionViewCell.identifier, bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-        setCollectionViewLayout()
         
         // searchBar 기능 추가
         searchBar.showsCancelButton = true
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-        
-        searchList = movieInfo.list
     }
     
     //    @IBAction func searchBarItemClicked(_ sender: UIBarButtonItem) {
@@ -70,14 +90,11 @@ class MainCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("1234")
-//        self.collectionView.endEditing(true)
-        
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as! DetailViewController
         let row = searchList[indexPath.row]
         vc.movieData = row
-
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -99,13 +116,17 @@ class MainCollectionViewController: UICollectionViewController {
     
     @objc func likeButtonClicked(_ sender: UIButton) {
         // 버튼에 지정해둔 tag (indexPath.row) 로 해당값 찾기
-        searchList[sender.tag].isLike.toggle()
-        //        collectionView.reloadData()
+        for i in 0...MovieInfo.list.count - 1 {
+            if i == sender.tag {
+                MovieInfo.list[i].isLike.toggle()
+                searchList[i].isLike.toggle()
+            }
+        }
     }
     
     private func searchAction() {
         searchList.removeAll()
-        for movie in movieInfo.list {
+        for movie in MovieInfo.list {
             if movie.title.uppercased().contains(searchBar.text!) {
                 searchList.append(movie)
             }
@@ -118,17 +139,18 @@ extension MainCollectionViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
-        searchList = movieInfo.list
+        searchList = MovieInfo.list
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchAction()
+        searchBar.endEditing(true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchAction()
         if searchText.count == 0 {
-            searchList = movieInfo.list
+            searchList = MovieInfo.list
         }
     }
     
