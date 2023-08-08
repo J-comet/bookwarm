@@ -32,6 +32,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(row: Movie) {
+        containerView.backgroundColor = row.bgColor
         titleLabel.text = row.title
         rateLabel.text = "\(row.rate)"
         mainImageView.image = UIImage(named: row.title)
@@ -44,7 +45,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
     
     private func designCell() {
-        containerView.backgroundColor = UIColor.randomColor
+    
         containerView.layer.cornerRadius = 12
         titleLabel.font = .boldSystemFont(ofSize: 16)
         titleLabel.textColor = .white

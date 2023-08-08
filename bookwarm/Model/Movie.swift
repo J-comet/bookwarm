@@ -5,7 +5,7 @@
 //  Created by 장혜성 on 2023/07/31.
 //
 
-import Foundation
+import UIKit
 
 struct Movie {
     let title: String
@@ -15,6 +15,7 @@ struct Movie {
     var rate: Double
     var isLike: Bool = false
     var categoryList: [String] = []
+    var bgColor: UIColor = .randomColor
     
     var runtimeByHour: String {
         get {
