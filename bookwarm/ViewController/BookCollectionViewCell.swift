@@ -12,6 +12,7 @@ class BookCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "BookCollectionViewCell"
     
+    @IBOutlet var containerView: UIView!
     @IBOutlet var thumbImageVIew: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
@@ -23,17 +24,27 @@ class BookCollectionViewCell: UICollectionViewCell {
     }
     
     private func designCell() {
-        titleLabel.font = .boldSystemFont(ofSize: 14)
-        priceLabel.font = .systemFont(ofSize: 12, weight: .thin)
-        contentLabel.font = .systemFont(ofSize: 12)
+        containerView.layer.borderWidth = 1
+        containerView.layer.cornerRadius = 8
+        containerView.layer.borderColor = UIColor.brown.cgColor
         
-        thumbImageVIew.contentMode = .scaleAspectFit
+        titleLabel.numberOfLines = 2
+        titleLabel.font = .boldSystemFont(ofSize: 12)
+        titleLabel.textColor = .black
+        priceLabel.font = .systemFont(ofSize: 10, weight: .thin)
+        priceLabel.textColor = .lightGray
+        contentLabel.font = .systemFont(ofSize: 10)
+        contentLabel.textColor = .lightGray
+        
+        thumbImageVIew.contentMode = .scaleAspectFill
+        thumbImageVIew.layer.cornerRadius = 8
     }
     
-    func configCell(row: Book) {
+    func configureCell(row: Book) {
         titleLabel.text = row.title
-        priceLabel.text = "\(row.price)"
-        contentLabel.text = row.contents
+        priceLabel.text = "\(row.salePrice)원"
+        
+        contentLabel.text = row.contents.isEmpty ? "내용이 없습니다" : row.contents
         
         thumbImageVIew.kf.setImage(with: URL(string: row.thumbnail), placeholder: nil, options: [.transition(.fade(0.7))], progressBlock: nil)
     }
