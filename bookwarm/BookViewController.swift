@@ -25,6 +25,9 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         }
     }
     
+    var page = 1
+    var isEnd = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         designVC()
@@ -43,22 +46,33 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         
         bookCollectionView.dataSource = self
         bookCollectionView.delegate = self
+        bookCollectionView.prefetchDataSource = self
         
         let nib = UINib(nibName: BookCollectionViewCell.identifier, bundle: nil)
         bookCollectionView.register(nib, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
     }
     
-    private func callRequest(searchText: String) {
+    private func callRequest(page: Int, searchText: String) {
 
-        let parameters = ["query": searchText]
+        let parameters = [
+            "page": "\(page)",
+            "size": "20",
+            "query": searchText,
+            "target": "title"
+        ]
         
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: header)
-            .validate()
+            .validate(statusCode: 200...500)
             .responseJSON { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                print(json)
+                
+                print(response.request?.urlRequest)
+                
+                self.isEnd = json["meta"]["is_end"].boolValue
+                
+                print("isEnd = ", self.isEnd)
                 
                 for item in json["documents"].arrayValue {
                     
@@ -109,7 +123,8 @@ extension BookViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchList.removeAll()
-        callRequest(searchText: searchBar.text!)
+        page = 1
+        callRequest(page: page, searchText: searchBar.text!)
         searchBar.endEditing(true)
     }
     
@@ -120,7 +135,21 @@ extension BookViewController: UISearchBarDelegate {
     
 }
 
-extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if searchList.count - 1 == indexPath.row && page < 50 && !isEnd {
+                page += 1
+                callRequest(page: page, searchText: searchBar.text!)
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        // 용량이 큰 파일을 데이터로 받는데 유저가 스크롤 빨리하면 굳이 큰 용량을 로드할 필요가 없기 때문에 취소작업을 추가!!
+    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searchList.count
     }
