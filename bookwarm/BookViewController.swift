@@ -149,7 +149,9 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
         print("scroll = \(scrollOffset)")
         print("collectionView / 2 = \(collectionViewHeight / 2)")
         
-        if scrollOffset > collectionViewHeight / 2 && self.isScrollingPaging {
+        let pagingPosition = collectionViewHeight * 0.3
+        
+        if scrollOffset > collectionViewHeight - pagingPosition && self.isScrollingPaging {
             isScrollingPaging = false
             if page < 50 && !isEnd {
                 page += 1
