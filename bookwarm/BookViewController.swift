@@ -73,7 +73,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
                         title: item["title"].stringValue,
                         contents: item["contents"].stringValue,
                         thumbnail: item["thumbnail"].stringValue,
-                        salePrice: item["sale_price"].intValue
+                        salePrice: item["sale_price"].intValue == -1 ? item["price"].intValue : item["sale_price"].intValue
                     )
                     
                     self.searchList.append(book)
