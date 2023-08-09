@@ -363,19 +363,27 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="wSt-PN-0Ob">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="YFj-Gc-aOl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vuf-X2-lYA" firstAttribute="top" secondItem="YFj-Gc-aOl" secondAttribute="top" id="3zB-XC-SoW"/>
                             <constraint firstItem="vuf-X2-lYA" firstAttribute="leading" secondItem="YFj-Gc-aOl" secondAttribute="leading" id="OBD-JR-MRt"/>
+                            <constraint firstItem="YFj-Gc-aOl" firstAttribute="bottom" secondItem="wSt-PN-0Ob" secondAttribute="bottom" id="OdS-yu-0Gy"/>
                             <constraint firstItem="YFj-Gc-aOl" firstAttribute="bottom" secondItem="vuf-X2-lYA" secondAttribute="bottom" id="Tdx-YW-xoc"/>
                             <constraint firstItem="YFj-Gc-aOl" firstAttribute="trailing" secondItem="vuf-X2-lYA" secondAttribute="trailing" id="Ve4-dB-Hr7"/>
+                            <constraint firstItem="wSt-PN-0Ob" firstAttribute="top" secondItem="YFj-Gc-aOl" secondAttribute="top" id="Y6M-0C-95m"/>
+                            <constraint firstItem="wSt-PN-0Ob" firstAttribute="leading" secondItem="YFj-Gc-aOl" secondAttribute="leading" id="ZHB-LW-4MK"/>
+                            <constraint firstItem="YFj-Gc-aOl" firstAttribute="trailing" secondItem="wSt-PN-0Ob" secondAttribute="trailing" id="nbn-9S-c2z"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="R4B-Sk-iZ5"/>
                     <connections>
                         <outlet property="bookCollectionView" destination="vuf-X2-lYA" id="FbD-fZ-mVu"/>
+                        <outlet property="indicatorView" destination="wSt-PN-0Ob" id="onc-Cn-nT0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Vv-VD-8uw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
