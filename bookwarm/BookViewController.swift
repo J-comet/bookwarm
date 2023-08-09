@@ -17,6 +17,8 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
     let header: HTTPHeaders = ["Authorization":"KakaoAK \(APIKey.kakaoRESTKey)"]
 
     @IBOutlet var bookCollectionView: UICollectionView!
+    @IBOutlet var indicatorView: UIActivityIndicatorView!
+    
     let searchBar = UISearchBar()
     
     var searchList: [Book] = [] {
@@ -34,6 +36,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         super.viewDidLoad()
         designVC()
         configVC()
+        indicatorView.hidesWhenStopped = true
     }
     
     func designVC() {
@@ -41,6 +44,10 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
     }
     
     func configVC() {
+        bookCollectionView.refreshControl = UIRefreshControl()
+        bookCollectionView.refreshControl?.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        bookCollectionView.refreshControl?.tintColor = .green
+        
         // searchBar 기능 추가
         searchBar.showsCancelButton = true
         navigationItem.titleView = searchBar
@@ -54,8 +61,14 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         bookCollectionView.register(nib, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
     }
     
+    @objc func refreshData() {
+        page = 1
+        callRequest(page: page, searchText: searchBar.text!)
+    }
+    
     private func callRequest(page: Int, searchText: String) {
 
+        indicatorView.startAnimating()
         let parameters = [
             "page": "\(page)",
             "size": "20",
@@ -99,7 +112,9 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
                 print(error)
             }
                 
+            self.indicatorView.stopAnimating()
             self.isScrollingPaging = true
+            self.bookCollectionView.refreshControl?.endRefreshing()
         }
     }
     
@@ -145,9 +160,9 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let scrollOffset = scrollView.contentOffset.y
         let collectionViewHeight = self.bookCollectionView.contentSize.height
         
-        print()
-        print("scroll = \(scrollOffset)")
-        print("collectionView / 2 = \(collectionViewHeight / 2)")
+//        print()
+//        print("scroll = \(scrollOffset)")
+//        print("collectionView / 2 = \(collectionViewHeight / 2)")
         
         let pagingPosition = collectionViewHeight * 0.3
         
@@ -159,7 +174,7 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             print("페이징")
         } else {
-            print("페이징 처리 중으로 스크롤 동작 막기")
+//            print("페이징 처리 중으로 스크롤 동작 막기")
         }
     }
     
