@@ -28,6 +28,8 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
     var page = 1
     var isEnd = false
     
+    var isScrollingPaging = true  // (스크롤 제어) 스크롤로 페이징처리 , 페이징 시작할 때 false , 통신 완료 후 다시 true 로 변경
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         designVC()
@@ -46,7 +48,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         
         bookCollectionView.dataSource = self
         bookCollectionView.delegate = self
-        bookCollectionView.prefetchDataSource = self
+//        bookCollectionView.prefetchDataSource = self  // scrollview offset 으로 페이징 테스트 중
         
         let nib = UINib(nibName: BookCollectionViewCell.identifier, bundle: nil)
         bookCollectionView.register(nib, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
@@ -96,6 +98,8 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
             case .failure(let error):
                 print(error)
             }
+                
+            self.isScrollingPaging = true
         }
     }
     
@@ -136,6 +140,27 @@ extension BookViewController: UISearchBarDelegate {
 }
 
 extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollOffset = scrollView.contentOffset.y
+        let collectionViewHeight = self.bookCollectionView.contentSize.height
+        
+        print()
+        print("scroll = \(scrollOffset)")
+        print("collectionView / 2 = \(collectionViewHeight / 2)")
+        
+        if scrollOffset > collectionViewHeight / 2 && self.isScrollingPaging {
+            isScrollingPaging = false
+            if page < 50 && !isEnd {
+                page += 1
+                callRequest(page: page, searchText: searchBar.text!)
+            }
+            print("페이징")
+        } else {
+            print("페이징 처리 중으로 스크롤 동작 막기")
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if searchList.count - 1 == indexPath.row && page < 50 && !isEnd {
