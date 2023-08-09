@@ -46,7 +46,12 @@ class BookCollectionViewCell: UICollectionViewCell {
         
         contentLabel.text = row.contents.isEmpty ? "내용이 없습니다" : row.contents
         
-        thumbImageVIew.kf.setImage(with: URL(string: row.thumbnail), placeholder: nil, options: [.transition(.fade(0.7))], progressBlock: nil)
+        if row.thumbnail.isEmpty {
+            thumbImageVIew.backgroundColor = .systemGray4
+        } else {
+            thumbImageVIew.kf.setImage(with: URL(string: row.thumbnail), placeholder: nil, options: [.transition(.fade(0.7))], progressBlock: nil)
+        }
+        
     }
 
 }
