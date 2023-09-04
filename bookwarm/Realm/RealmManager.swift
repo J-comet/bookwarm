@@ -63,10 +63,60 @@ class RealmManager {
                 update(currentItem)
                 print("UPDATE Succeed")
             }
-            
         } catch  {
             print(#function, "error")
         }
     }
     
+    // 삭제
+    func delete(obj: Object) {
+        guard let realm = realm else { return }
+        do {
+            let _ = try realm.write {
+                realm.delete(obj)
+                print("DELETE Succeed")
+            }
+        } catch  {
+            print(#function, "error")
+        }
+    }
+ 
+    // 삭제 - ID
+    func deleteByID<T: Object>(
+        objectType: T.Type,
+        _ isIncluded: ((Query<T>) -> Query<Bool>)
+    ) {
+        print(realm?.configuration.fileURL)
+        guard let realm = realm else { return }
+        
+        let currentItem = realm.objects(T.self).where {
+            isIncluded($0)
+        }.first
+        
+        do {
+            let _ = try realm.write {
+                guard let currentItem else {
+                    print("DELETE 할 아이템이 존재하지않음")
+                    return
+                }
+                realm.delete(currentItem)
+                print("DELETE Succeed")
+            }
+        } catch  {
+            print(#function, "error")
+        }
+    }
+    
+    // 모두 삭제
+    func deleteAll() {
+        guard let realm = realm else { return }
+        do {
+            let _ = try realm.write {
+                realm.deleteAll()
+                print("ALL DELETE Succeed")
+            }
+        } catch  {
+            print(#function, "error")
+        }
+    }
 }

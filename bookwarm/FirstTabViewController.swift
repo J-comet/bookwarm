@@ -29,10 +29,10 @@ class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
         self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
         
         // 필터링 후 리스트
-                let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
-                    $0.title == "하하"
-                }
-                self.searhList = filters
+        let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
+            $0.title == "하하"
+        }
+        self.searhList = filters
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,13 +162,22 @@ extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDe
         }
         
         print(row.title)
-        RealmManager.shared.update(
-            objectType: SearchBook.self) {
-                $0._id == row._id
-            } update: {
-                $0.title = "하하"
-            }
-        headerCollectionView.reloadItems(at: [indexPath])
+        
+        // 수정
+//        RealmManager.shared.update(
+//            objectType: SearchBook.self) {
+//                $0._id == row._id
+//            } update: {
+//                $0.title = "하하"
+//            }
+        
+        // 삭제 - 아이디로
+//        RealmManager.shared.deleteByID(objectType: SearchBook.self) {
+//            $0._id == row._id
+//        }
+        
+        // 삭제 - 객체로
+        RealmManager.shared.delete(obj: row)
         
         //        moveDetailVC(row: MovieInfo.list[indexPath.row])
     }
