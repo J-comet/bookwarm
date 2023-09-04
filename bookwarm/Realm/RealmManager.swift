@@ -14,18 +14,21 @@ class RealmManager {
     
     private let realm = try? Realm()
     
-    func all<T: Object>(objectClass: T.Type) -> Results<T>? {
+    // 모든 데이터 가져오기
+    func all<T: Object>(objectType: T.Type) -> Results<T>? {
         print(realm?.configuration.fileURL)
         return realm?.objects(T.self)
     }
     
-    func filterAll<T: Object>(objectClass: T.Type, _ isIncluded: ((Query<T>) -> Query<Bool>)) -> Results<T>? {
+    // 필터후에 모든 데이터 가져오기
+    func filterAll<T: Object>(objectType: T.Type, _ isIncluded: ((Query<T>) -> Query<Bool>)) -> Results<T>? {
         print(realm?.configuration.fileURL)
         return realm?.objects(T.self).where {
             isIncluded($0)
         }
     }
     
+    // 추가
     func add(obj: Object) {
         guard let realm = realm else { return }
         do {
@@ -33,9 +36,37 @@ class RealmManager {
                 realm.add(obj)
                 print("ADD Succeed")
             }
+        } catch  {
+            print(#function, "error")
+        }
+    }
+    
+    // 수정
+    func update<T: Object>(
+        objectType: T.Type,
+        _ isIncluded: ((Query<T>) -> Query<Bool>),
+        update: (T) -> Void
+    ) {
+        print(realm?.configuration.fileURL)
+        guard let realm = realm else { return }
+        
+        let currentItem = realm.objects(T.self).where {
+            isIncluded($0)
+        }.first
+        
+        do {
+            let _ = try realm.write {
+                guard let currentItem else {
+                    print("UPDATE 할 아이템이 존재하지않음")
+                    return
+                }
+                update(currentItem)
+                print("UPDATE Succeed")
+            }
             
         } catch  {
             print(#function, "error")
         }
     }
+    
 }
