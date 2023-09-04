@@ -26,7 +26,16 @@ class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
         headerCollectionView.alwaysBounceHorizontal = true
         
         let tasks = RealmManager.shared.all(objectClass: SearchBook.self)
-        self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
+        
+        let todosInProgress = tasks?.where {
+            $0.title == "아이유"
+        }
+        
+        let filters = RealmManager.shared.filterAll(objectClass: SearchBook.self) {
+            $0.title == "호"
+        }
+        self.searhList = filters
+//        self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
