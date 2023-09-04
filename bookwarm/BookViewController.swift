@@ -8,6 +8,7 @@
 import UIKit
 import SwiftyJSON
 import Alamofire
+import RealmSwift
 
 class BookViewController: UIViewController, BaseViewControllerProtocol {
     
@@ -18,6 +19,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
 
     @IBOutlet var bookCollectionView: UICollectionView!
     @IBOutlet var indicatorView: UIActivityIndicatorView!
+    @IBOutlet var emptyLabel: UILabel!
     
     let searchBar = UISearchBar()
     
@@ -83,11 +85,13 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
             case .success(let value):
                 let json = JSON(value)
                 
-                print(response.request?.urlRequest)
+//                print(response.request?.urlRequest)
                 
                 self.isEnd = json["meta"]["is_end"].boolValue
                 
                 print("isEnd = ", self.isEnd)
+                
+                self.emptyLabel.isHidden = self.isEnd && self.searchList.isEmpty ? false : true
                 
                 for item in json["documents"].arrayValue {
                     
@@ -203,5 +207,18 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let row = searchList[indexPath.row]
+        print(row)
+        
+        let realm = try! Realm()
+        
+        let task = SearchBook(title: row.title, optContents: row.contents, optThumbnail: row.thumbnail)
+        try! realm.write {
+            // realm 추가 코드
+            realm.add(task)
+            print("ADD Succeed")
+        }
+    }
     
 }
