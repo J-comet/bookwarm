@@ -10,7 +10,7 @@ import UIKit
 class FirstHeaderCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "FirstHeaderCollectionViewCell"
-
+    
     @IBOutlet var headerImageView: UIImageView!
     
     override func awakeFromNib() {
@@ -18,8 +18,15 @@ class FirstHeaderCollectionViewCell: UICollectionViewCell {
         designCell()
     }
     
-    func configureCell(row: Movie) {
-        headerImageView.image = UIImage(named: row.title)
+    func configureCell(row: SearchBook) {
+        
+        guard let thumbnail = row.optThumbnail else {
+            headerImageView.backgroundColor = .systemGray4
+            return
+        }
+        
+        headerImageView.kf.setImage(with: URL(string: thumbnail), placeholder: nil, options: [.transition(.fade(0.7))], progressBlock: nil)
+        
     }
     
     private func designCell() {
@@ -28,5 +35,5 @@ class FirstHeaderCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 12
         contentView.layer.masksToBounds = true
     }
-
+    
 }

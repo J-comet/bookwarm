@@ -6,17 +6,37 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
     
     @IBOutlet var headerCollectionView: UICollectionView!
     @IBOutlet var mainTableView: UITableView!
     
+    @IBOutlet var emptyLabel: UILabel!
+    
+    var searhList: Results<SearchBook>?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configNavigationBar()
         designVC()
         configVC()
+        
+        headerCollectionView.alwaysBounceHorizontal = true
+        
+        let realm = try! Realm()
+        
+        // Access all dogs in the realm
+        let tasks = realm.objects(SearchBook.self)
+        self.searhList = tasks
+        print(realm.configuration.fileURL)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        emptyLabel.isHidden = ((searhList?.count ?? 0) != 0) ? true : false
+        headerCollectionView.reloadData()
     }
     
     func configNavigationBar() {
@@ -114,7 +134,7 @@ extension FirstTabViewController: UITableViewDataSource, UITableViewDelegate {
 extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return MovieInfo.list.count
+        return searhList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -122,7 +142,9 @@ extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDe
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FirstHeaderCollectionViewCell.identifier, for: indexPath) as? FirstHeaderCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.configureCell(row: MovieInfo.list[indexPath.row])
+            
+            guard let row = searhList?[indexPath.item] else { return cell }
+            cell.configureCell(row: row)
             return cell
         } else {
             return UICollectionViewCell()
@@ -130,6 +152,6 @@ extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        moveDetailVC(row: MovieInfo.list[indexPath.row])
+//        moveDetailVC(row: MovieInfo.list[indexPath.row])
     }
 }
