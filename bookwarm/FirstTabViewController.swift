@@ -25,12 +25,8 @@ class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
         
         headerCollectionView.alwaysBounceHorizontal = true
         
-        let realm = try! Realm()
-        
-        // Access all dogs in the realm
-        let tasks = realm.objects(SearchBook.self)
-        self.searhList = tasks
-        print(realm.configuration.fileURL)
+        let tasks = RealmManager.shared.all(objectClass: SearchBook.self)
+        self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,6 +148,7 @@ extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
 //        moveDetailVC(row: MovieInfo.list[indexPath.row])
     }
 }

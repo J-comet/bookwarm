@@ -24,6 +24,7 @@
 		C05C44572AA5A39800C4CE69 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C05C44562AA5A39800C4CE69 /* Realm */; };
 		C05C44592AA5A39800C4CE69 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C05C44582AA5A39800C4CE69 /* RealmSwift */; };
 		C05C445B2AA5A94F00C4CE69 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05C445A2AA5A94F00C4CE69 /* RealmModel.swift */; };
+		C05C445D2AA5B3FE00C4CE69 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05C445C2AA5B3FE00C4CE69 /* RealmManager.swift */; };
 		C0A4058C2A82688D00C7C1CE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C0A4058B2A82688D00C7C1CE /* Kingfisher */; };
 		C0A4058F2A82689D00C7C1CE /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C0A4058E2A82689D00C7C1CE /* SwiftyJSON */; };
 		C0A405922A8268A600C7C1CE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C0A405912A8268A600C7C1CE /* Alamofire */; };
@@ -60,6 +61,7 @@
 		C021B0132A7A944F00E096EC /* FirstTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FirstTableViewCell.swift; path = bookwarm/ViewController/FirstTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		C021B0142A7A944F00E096EC /* FirstTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = FirstTableViewCell.xib; path = bookwarm/ViewController/FirstTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		C05C445A2AA5A94F00C4CE69 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
+		C05C445C2AA5B3FE00C4CE69 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C0A405952A826B8700C7C1CE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		C0A405972A826BB400C7C1CE /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		C0A405992A82706000C7C1CE /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				C05C445A2AA5A94F00C4CE69 /* RealmModel.swift */,
+				C05C445C2AA5B3FE00C4CE69 /* RealmManager.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				C0EAD3BC2A7A2D9100A289BA /* FirstHeaderCollectionViewCell.swift in Sources */,
 				C01569412A77998D008685C2 /* SceneDelegate.swift in Sources */,
 				C01569582A779BF2008685C2 /* MovieCollectionViewCell.swift in Sources */,
+				C05C445D2AA5B3FE00C4CE69 /* RealmManager.swift in Sources */,
 				C00F2DDE2A7BE53E004729B9 /* Protocol+ViewController.swift in Sources */,
 				C0EAD3882A77DE7D00A289BA /* DetailViewController.swift in Sources */,
 			);

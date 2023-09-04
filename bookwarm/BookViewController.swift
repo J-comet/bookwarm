@@ -16,7 +16,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
     
     let url = "https://dapi.kakao.com/v3/search/book"
     let header: HTTPHeaders = ["Authorization":"KakaoAK \(APIKey.kakaoRESTKey)"]
-
+    
     @IBOutlet var bookCollectionView: UICollectionView!
     @IBOutlet var indicatorView: UIActivityIndicatorView!
     @IBOutlet var emptyLabel: UILabel!
@@ -57,7 +57,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         
         bookCollectionView.dataSource = self
         bookCollectionView.delegate = self
-//        bookCollectionView.prefetchDataSource = self  // scrollview offset 으로 페이징 테스트 중
+        //        bookCollectionView.prefetchDataSource = self  // scrollview offset 으로 페이징 테스트 중
         
         let nib = UINib(nibName: BookCollectionViewCell.identifier, bundle: nil)
         bookCollectionView.register(nib, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
@@ -69,7 +69,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
     }
     
     private func callRequest(page: Int, searchText: String) {
-
+        
         indicatorView.startAnimating()
         let parameters = [
             "page": "\(page)",
@@ -81,45 +81,45 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
         AF.request(url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: header)
             .validate(statusCode: 200...500)
             .responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                
-//                print(response.request?.urlRequest)
-                
-                self.isEnd = json["meta"]["is_end"].boolValue
-                
-                print("isEnd = ", self.isEnd)
-                
-                self.emptyLabel.isHidden = self.isEnd && self.searchList.isEmpty ? false : true
-                
-                for item in json["documents"].arrayValue {
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
                     
-                    var authors: [String] = []
+                    //                print(response.request?.urlRequest)
                     
-                    for author in item["authors"].arrayValue {
-                        authors.append(author.stringValue)
+                    self.isEnd = json["meta"]["is_end"].boolValue
+                    
+                    print("isEnd = ", self.isEnd)
+                    
+                    self.emptyLabel.isHidden = self.isEnd && self.searchList.isEmpty ? false : true
+                    
+                    for item in json["documents"].arrayValue {
+                        
+                        var authors: [String] = []
+                        
+                        for author in item["authors"].arrayValue {
+                            authors.append(author.stringValue)
+                        }
+                        
+                        let book = Book(
+                            authors: authors,
+                            title: item["title"].stringValue,
+                            contents: item["contents"].stringValue,
+                            thumbnail: item["thumbnail"].stringValue,
+                            salePrice: item["sale_price"].intValue == -1 ? item["price"].intValue : item["sale_price"].intValue
+                        )
+                        
+                        self.searchList.append(book)
                     }
                     
-                    let book = Book(
-                        authors: authors,
-                        title: item["title"].stringValue,
-                        contents: item["contents"].stringValue,
-                        thumbnail: item["thumbnail"].stringValue,
-                        salePrice: item["sale_price"].intValue == -1 ? item["price"].intValue : item["sale_price"].intValue
-                    )
-                    
-                    self.searchList.append(book)
+                case .failure(let error):
+                    print(error)
                 }
                 
-            case .failure(let error):
-                print(error)
+                self.indicatorView.stopAnimating()
+                self.isScrollingPaging = true
+                self.bookCollectionView.refreshControl?.endRefreshing()
             }
-                
-            self.indicatorView.stopAnimating()
-            self.isScrollingPaging = true
-            self.bookCollectionView.refreshControl?.endRefreshing()
-        }
     }
     
     private func setCollectionViewLayout() {
@@ -153,7 +153,7 @@ extension BookViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // 실시간 검색 기능
-//        callRequest(searchText: searchText)
+        //        callRequest(searchText: searchText)
     }
     
 }
@@ -164,9 +164,9 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let scrollOffset = scrollView.contentOffset.y
         let collectionViewHeight = self.bookCollectionView.contentSize.height
         
-//        print()
-//        print("scroll = \(scrollOffset)")
-//        print("collectionView / 2 = \(collectionViewHeight / 2)")
+        //        print()
+        //        print("scroll = \(scrollOffset)")
+        //        print("collectionView / 2 = \(collectionViewHeight / 2)")
         
         let pagingPosition = collectionViewHeight * 0.3
         
@@ -178,7 +178,7 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
             print("페이징")
         } else {
-//            print("페이징 처리 중으로 스크롤 동작 막기")
+            //            print("페이징 처리 중으로 스크롤 동작 막기")
         }
     }
     
@@ -211,14 +211,13 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let row = searchList[indexPath.row]
         print(row)
         
-        let realm = try! Realm()
-        
-        let task = SearchBook(title: row.title, optContents: row.contents, optThumbnail: row.thumbnail)
-        try! realm.write {
-            // realm 추가 코드
-            realm.add(task)
-            print("ADD Succeed")
-        }
+        RealmManager.shared.add(
+            obj: SearchBook(
+                title: row.title,
+                optContents: row.contents,
+                optThumbnail: row.thumbnail
+            )
+        )
     }
     
 }
