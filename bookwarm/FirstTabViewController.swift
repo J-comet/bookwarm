@@ -16,6 +16,12 @@ class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
     @IBOutlet var emptyLabel: UILabel!
     
     var searhList: Results<SearchBook>?
+    var notificationToken: NotificationToken?
+    
+    deinit {
+        // 노티피케이션 제거
+        notificationToken?.invalidate()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +35,35 @@ class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
         self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
         
         // 필터링 후 리스트
-        let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
-            $0.title == "하하"
-        }
-        self.searhList = filters
+//        let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
+//            $0.title == "하하"
+//        }
+//        self.searhList = filters
+        
+        realmResultsObserve(tasks: tasks)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        emptyLabel.isHidden = ((searhList?.count ?? 0) != 0) ? true : false
-        headerCollectionView.reloadData()
+    // realm 값 변화 옵저빙
+    private func realmResultsObserve(tasks: Results<SearchBook>?) {
+        
+        // observe
+        notificationToken = tasks?.observe { [weak self] changes in
+            switch changes {
+            case .initial:
+                self?.emptyLabel.isHidden = ((self?.searhList?.count ?? 0) != 0) ? true : false
+                self?.headerCollectionView.reloadData()
+            case .update(_, let deletions, let insertions, let modifications):
+                // Query results have changed.
+                print("Deleted indices: ", deletions)
+                print("Inserted indices: ", insertions)
+                print("Modified modifications: ", modifications)
+                self?.emptyLabel.isHidden = ((self?.searhList?.count ?? 0) != 0) ? true : false
+                self?.headerCollectionView.reloadData()
+            case .error(let error):
+                // An error occurred while opening the Realm file on the background worker thread
+                fatalError("\(error)")
+            }
+        }
     }
     
     func configNavigationBar() {
@@ -154,14 +179,12 @@ extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function)
         let row = searhList?[indexPath.item]
+        print(#function, row?.title)
         guard let row else {
             print(#function, "오류 오류")
             return
         }
-        
-        print(row.title)
         
         // 수정
 //        RealmManager.shared.update(
