@@ -19,6 +19,13 @@ class RealmManager {
         return realm?.objects(T.self)
     }
     
+    func filterAll<T: Object>(objectClass: T.Type, _ isIncluded: ((Query<T>) -> Query<Bool>)) -> Results<T>? {
+        print(realm?.configuration.fileURL)
+        return realm?.objects(T.self).where {
+            isIncluded($0)
+        }
+    }
+    
     func add(obj: Object) {
         guard let realm = realm else { return }
         do {
