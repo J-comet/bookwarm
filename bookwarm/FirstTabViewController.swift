@@ -25,17 +25,14 @@ class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
         
         headerCollectionView.alwaysBounceHorizontal = true
         
-        let tasks = RealmManager.shared.all(objectClass: SearchBook.self)
+        let tasks = RealmManager.shared.all(objectType: SearchBook.self)
+        self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
         
-        let todosInProgress = tasks?.where {
-            $0.title == "아이유"
-        }
-        
-        let filters = RealmManager.shared.filterAll(objectClass: SearchBook.self) {
-            $0.title == "호"
-        }
-        self.searhList = filters
-//        self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
+        // 필터링 후 리스트
+                let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
+                    $0.title == "하하"
+                }
+                self.searhList = filters
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -122,12 +119,12 @@ extension FirstTabViewController: UITableViewDataSource, UITableViewDelegate {
     
     // 테이블뷰 섹션 텍스트 스타일
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-//        view.tintColor = .red  // 섹션의 백그라운드 컬러가 변경됨
+        //        view.tintColor = .red  // 섹션의 백그라운드 컬러가 변경됨
         guard let header = view as? UITableViewHeaderFooterView else { return }
         header.textLabel?.textColor = .black
         header.textLabel?.font = .boldSystemFont(ofSize: 17)
-//        header.textLabel?.frame = header.frame(forAlignmentRect: CGRect(x: 16, y: 0, width: 110, height: 21))
-//        header.textLabel?.textAlignment = .center
+        //        header.textLabel?.frame = header.frame(forAlignmentRect: CGRect(x: 16, y: 0, width: 110, height: 21))
+        //        header.textLabel?.textAlignment = .center
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -137,7 +134,7 @@ extension FirstTabViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searhList?.count ?? 0
     }
@@ -157,7 +154,22 @@ extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
+        let row = searhList?[indexPath.item]
+        guard let row else {
+            print(#function, "오류 오류")
+            return
+        }
         
-//        moveDetailVC(row: MovieInfo.list[indexPath.row])
+        print(row.title)
+        RealmManager.shared.update(
+            objectType: SearchBook.self) {
+                $0._id == row._id
+            } update: {
+                $0.title = "하하"
+            }
+        headerCollectionView.reloadItems(at: [indexPath])
+        
+        //        moveDetailVC(row: MovieInfo.list[indexPath.row])
     }
 }
