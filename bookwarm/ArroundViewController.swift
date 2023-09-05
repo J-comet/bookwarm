@@ -171,7 +171,8 @@ extension ArroundViewController: UICollectionViewDataSource, UICollectionViewDel
             }
             
             guard let row = searhList?[indexPath.item] else { return cell }
-            cell.configureCell(row: row)
+            cell.headerImageView.image = loadImageToDocument(fileName: "\(row._id).jpg")
+//            cell.configureCell(row: row)
             return cell
         } else {
             return UICollectionViewCell()

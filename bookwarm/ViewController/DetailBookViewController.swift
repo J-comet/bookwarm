@@ -141,9 +141,11 @@ class DetailBookViewController: UIViewController {
             
             thumbImageView.backgroundColor = .systemGray5
             
-            if let thumbnail = realmData.optThumbnail {
-                thumbImageView.kf.setImage(with: URL(string: thumbnail))
-            }
+            thumbImageView.image = loadImageToDocument(fileName: "\(realmData._id).jpg")
+            
+//            if let thumbnail = realmData.optThumbnail {
+//                thumbImageView.kf.setImage(with: URL(string: thumbnail))
+//            }
             titleLabel.text = realmData.title
             contentLabel.text = realmData.optContents == nil ? "내용이 없습니다" : realmData.optContents
             priceLabel.text =  realmData.optPrice == nil ? "가격 정보 없음" : "가격 \(String(describing: realmData.optPrice))원"
@@ -249,16 +251,20 @@ class DetailBookViewController: UIViewController {
     }
     
     private func addRealmData(data: Book) {
+        let currentContents = data.contents.isEmpty ? nil : data.contents
         RealmManager.shared.add(
             obj: SearchBook(
                 title: data.title,
-                optContents: data.contents,
-                optThumbnail: data.thumbnail,
+                optContents: currentContents,
                 optMemo: nil,
                 optPrice: data.salePrice
-            )) { isSuccess in
+            )) { [weak self] isSuccess in
                 if isSuccess {
-                    self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+                    let id = self?.getRealmBook(data: data)?._id
+                    if let id, let image = self?.thumbImageView.image {
+                        self?.saveImageToDocument(fileName: "\(id).jpg", image: image)
+                    }
+                    self?.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
                 } else {
                     print(#function, "실패")
                 }

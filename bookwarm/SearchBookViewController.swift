@@ -210,11 +210,6 @@ extension SearchBookViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let row = searchList[indexPath.row]
         print(row)
-        
-        /**
-         1. 해당 아이템 클릭시 상세페이지로 이동
-         2. 상세페이지 내에서 하트 눌렀을 때 추가되도록 수정
-         */
         let vc = DetailBookViewController()
         vc.data = row
         let nav = UINavigationController(rootViewController: vc)
