@@ -19,14 +19,12 @@ class FirstHeaderCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(row: SearchBook) {
-        
-        guard let thumbnail = row.optThumbnail else {
-            headerImageView.backgroundColor = .systemGray4
-            return
-        }
-        
-        headerImageView.kf.setImage(with: URL(string: thumbnail), placeholder: nil, options: [.transition(.fade(0.7))], progressBlock: nil)
-        
+//        guard let thumbnail = row.optThumbnail else {
+//            headerImageView.backgroundColor = .systemGray4
+//            return
+//        }
+//
+//        headerImageView.kf.setImage(with: URL(string: thumbnail), placeholder: nil, options: [.transition(.fade(0.7))], progressBlock: nil)
     }
     
     private func designCell() {

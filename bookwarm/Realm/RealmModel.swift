@@ -13,14 +13,12 @@ class SearchBook: Object {
     @Persisted var title: String
     @Persisted var saveDate: Date
     @Persisted var optContents: String?     // optional
-    @Persisted var optThumbnail: String?     // optional
     @Persisted var optMemo: String?     // optional
     @Persisted var optPrice: Int?     // optional
     
     convenience init(
         title: String,
         optContents: String? = nil,
-        optThumbnail: String? = nil,
         optMemo: String? = nil,
         optPrice: Int? = nil
     ) {
@@ -28,7 +26,6 @@ class SearchBook: Object {
         self.title = title
         self.saveDate = Date()
         self.optContents = optContents
-        self.optThumbnail = optThumbnail
         self.optMemo = optMemo
         self.optPrice = optPrice
     }
