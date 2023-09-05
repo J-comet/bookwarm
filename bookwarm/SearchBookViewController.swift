@@ -10,7 +10,7 @@ import SwiftyJSON
 import Alamofire
 import RealmSwift
 
-class BookViewController: UIViewController, BaseViewControllerProtocol {
+class SearchBookViewController: UIViewController, BaseViewControllerProtocol {
     
     static let identifier = "BookViewController"
     
@@ -138,7 +138,7 @@ class BookViewController: UIViewController, BaseViewControllerProtocol {
     }
 }
 
-extension BookViewController: UISearchBarDelegate {
+extension SearchBookViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = nil
         searchList.removeAll()
@@ -158,7 +158,7 @@ extension BookViewController: UISearchBarDelegate {
     
 }
 
-extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
+extension SearchBookViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let scrollOffset = scrollView.contentOffset.y
@@ -211,13 +211,24 @@ extension BookViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let row = searchList[indexPath.row]
         print(row)
         
-        RealmManager.shared.add(
-            obj: SearchBook(
-                title: row.title,
-                optContents: row.contents,
-                optThumbnail: row.thumbnail
-            )
-        )
+        /**
+         1. 해당 아이템 클릭시 상세페이지로 이동
+         2. 상세페이지 내에서 하트 눌렀을 때 추가되도록 수정
+         */
+        let vc = DetailBookViewController()
+        vc.data = row
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true)
+        
+        // 추가 메서드
+//        RealmManager.shared.add(
+//            obj: SearchBook(
+//                title: row.title,
+//                optContents: row.contents,
+//                optThumbnail: row.thumbnail
+//            )
+//        )
     }
     
 }
