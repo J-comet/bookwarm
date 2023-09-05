@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
+class ArroundViewController: UIViewController, BaseViewControllerProtocol {
     
     @IBOutlet var headerCollectionView: UICollectionView!
     @IBOutlet var mainTableView: UITableView!
@@ -122,7 +122,7 @@ class FirstTabViewController: UIViewController, BaseViewControllerProtocol {
     }
 }
 
-extension FirstTabViewController: UITableViewDataSource, UITableViewDelegate {
+extension ArroundViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MovieInfo.list.count
@@ -158,7 +158,7 @@ extension FirstTabViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension FirstTabViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ArroundViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return searhList?.count ?? 0
