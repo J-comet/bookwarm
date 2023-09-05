@@ -48,7 +48,8 @@ class RealmManager {
     func update<T: Object>(
         objectType: T.Type,
         _ isIncluded: ((Query<T>) -> Query<Bool>),
-        update: (T) -> Void
+        update: (T) -> Void,
+        complete: ((Bool) -> Void)? = nil
     ) {
         print(realm?.configuration.fileURL)
         guard let realm = realm else { return }
@@ -65,9 +66,11 @@ class RealmManager {
                 }
                 update(currentItem)
                 print("UPDATE Succeed")
+                complete?(true)
             }
         } catch  {
             print(#function, "error")
+            complete?(false)
         }
     }
     
