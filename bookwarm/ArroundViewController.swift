@@ -35,9 +35,9 @@ class ArroundViewController: UIViewController, BaseViewControllerProtocol {
         self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
         
         // 필터링 후 리스트
-//        let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
-//            $0.title == "하하"
-//        }
+        let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
+            $0.title == "하하"
+        }
 //        self.searhList = filters
         
         realmResultsObserve(tasks: tasks)

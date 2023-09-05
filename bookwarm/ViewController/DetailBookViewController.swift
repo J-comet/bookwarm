@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+import RealmSwift
 
 class DetailBookViewController: UIViewController {
     
@@ -110,8 +110,13 @@ class DetailBookViewController: UIViewController {
             action: #selector(closeButtonClicked)
         )
         
+        var likeImg = UIImage(systemName: "heart")
+        if let data {
+            likeImg = getRealmBook(data: data) == nil ? UIImage(systemName: "heart") : UIImage(systemName: "heart.fill")
+        }
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "heart"),
+            image: likeImg,
             style: .plain,
             target: self,
             action: #selector(likeButtonClicked)
@@ -129,13 +134,47 @@ class DetailBookViewController: UIViewController {
         print("좋아요")
         // 추가 메서드
         guard let data else { return }
-        
+
+        let realmData = getRealmBook(data: data)
+        if realmData == nil {
+            // 저장되어 있지 않다면 Realm 에서 Add 해주기
+            addRealmData(data: data)
+        } else {
+            // 현재 저장되어 있는 책이라면 Realm 에서 Delete 해주기
+            deleteRealData(realmData: realmData!)
+        }
+    }
+    
+    // 저장되어 있는 realm 데이터 가져오는 함수
+    private func getRealmBook(data: Book) -> SearchBook? {
+        let currentContents = data.contents.isEmpty ? nil : data.contents
+        return RealmManager.shared.filterAll(objectType: SearchBook.self) {
+            $0.title == data.title && $0.optContents == currentContents
+        }?.first
+    }
+    
+    private func addRealmData(data: Book) {
         RealmManager.shared.add(
             obj: SearchBook(
                 title: data.title,
                 optContents: data.contents,
                 optThumbnail: data.thumbnail
-            )
-        )
+            )) { isSuccess in
+                if isSuccess {
+                    self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+                } else {
+                    print(#function, "실패")
+                }
+            }
+    }
+    
+    private func deleteRealData(realmData: SearchBook) {
+        RealmManager.shared.delete(obj: realmData) { isSuccess in
+            if isSuccess {
+                self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+            } else {
+                print(#function, "실패")
+            }
+        }
     }
 }

@@ -29,16 +29,19 @@ class RealmManager {
     }
     
     // 추가
-    func add(obj: Object) {
+    func add(obj: Object, complete: ((Bool) -> Void)? = nil) {
         guard let realm = realm else { return }
         do {
             let _ = try realm.write {
                 realm.add(obj)
                 print("ADD Succeed")
             }
+            complete?(true)
         } catch  {
             print(#function, "error")
+            complete?(false)
         }
+        
     }
     
     // 수정
@@ -69,15 +72,17 @@ class RealmManager {
     }
     
     // 삭제
-    func delete(obj: Object) {
+    func delete(obj: Object, complete: ((Bool) -> Void)? = nil) {
         guard let realm = realm else { return }
         do {
             let _ = try realm.write {
                 realm.delete(obj)
                 print("DELETE Succeed")
             }
+            complete?(true)
         } catch  {
             print(#function, "error")
+            complete?(false)
         }
     }
  
