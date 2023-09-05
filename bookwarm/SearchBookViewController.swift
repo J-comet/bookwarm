@@ -220,15 +220,6 @@ extension SearchBookViewController: UICollectionViewDelegate, UICollectionViewDa
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)
-        
-        // 추가 메서드
-//        RealmManager.shared.add(
-//            obj: SearchBook(
-//                title: row.title,
-//                optContents: row.contents,
-//                optThumbnail: row.thumbnail
-//            )
-//        )
     }
     
 }
