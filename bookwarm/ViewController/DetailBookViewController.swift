@@ -11,21 +11,21 @@ import RealmSwift
 
 class DetailBookViewController: UIViewController {
     
-    var thumbImageView = {
+    let thumbImageView = {
         let view = UIImageView(frame: .zero)
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
     }()
     
-    var containerView = {
+    let containerView = {
         let view = UIView()
         view.layer.cornerRadius = 20
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return view
     }()
     
-    var titleLabel = {
+    let titleLabel = {
         let view = UILabel()
         view.textColor = .black
         view.font = .monospacedSystemFont(ofSize: 16, weight: .semibold)
@@ -33,7 +33,7 @@ class DetailBookViewController: UIViewController {
         return view
     }()
     
-    var contentLabel = {
+    let contentLabel = {
         let view = UILabel()
         view.font = .monospacedSystemFont(ofSize: 14, weight: .light)
         view.textColor = .darkGray
@@ -41,14 +41,43 @@ class DetailBookViewController: UIViewController {
         return view
     }()
     
-    var priceLabel = {
+    let priceLabel = {
         let view = UILabel()
         view.font = .monospacedSystemFont(ofSize: 18, weight: .bold)
         view.textColor = .link
         return view
     }()
     
+    let memoTextView = {
+        let view = UITextView()
+        view.backgroundColor = .systemGray4
+        view.textColor = .black
+        view.font = .monospacedSystemFont(ofSize: 14, weight: .regular)
+        view.isEditable = false
+        return view
+    }()
+    
+    lazy var editButton = {
+        let view = UIButton()
+        var attString = AttributedString("수 정")
+        attString.font = .systemFont(ofSize: 14, weight: .bold)
+        attString.foregroundColor = .white
+        var config = UIButton.Configuration.filled()
+        config.attributedTitle = attString
+        config.contentInsets = .init(top: 4, leading: 8, bottom: 4, trailing: 8)
+        config.baseBackgroundColor = .orange
+        view.configuration = config
+        view.addTarget(self, action: #selector(editButtonClicked), for: .touchUpInside)
+        view.isHidden = true
+        return view
+    }()
+    
     var data: Book?
+    
+    var editMode = false
+    var isEditComplete = false
+    
+    var defaultText = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +93,8 @@ class DetailBookViewController: UIViewController {
         containerView.addSubview(priceLabel)
         containerView.addSubview(titleLabel)
         containerView.addSubview(contentLabel)
+        containerView.addSubview(memoTextView)
+        containerView.addSubview(editButton)
         
         thumbImageView.snp.makeConstraints { make in
             make.horizontalEdges.top.equalToSuperview()
@@ -92,13 +123,44 @@ class DetailBookViewController: UIViewController {
             make.horizontalEdges.equalTo(priceLabel)
         }
         
+        memoTextView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.horizontalEdges.equalTo(priceLabel)
+            make.height.equalTo(200)
+        }
         
+        editButton.snp.makeConstraints { make in
+            make.bottom.equalTo(memoTextView.snp.top).offset(-10)
+            make.horizontalEdges.equalTo(priceLabel)
+        }
         
         guard let data else { return }
-        thumbImageView.kf.setImage(with: URL(string: data.thumbnail))
-        titleLabel.text = data.title
-        contentLabel.text = data.contents.isEmpty ? "내용이 없습니다" : data.contents
-        priceLabel.text = "가격 \(data.salePrice)원"
+        
+        let realmData = getRealmBook(data: data)
+        if let realmData {
+            
+            thumbImageView.backgroundColor = .systemGray5
+            
+            if let thumbnail = realmData.optThumbnail {
+                thumbImageView.kf.setImage(with: URL(string: thumbnail))
+            }
+            titleLabel.text = realmData.title
+            contentLabel.text = realmData.optContents == nil ? "내용이 없습니다" : realmData.optContents
+            priceLabel.text =  realmData.optPrice == nil ? "가격 정보 없음" : "가격 \(String(describing: realmData.optPrice))원"
+            memoTextView.text = realmData.optMemo == nil ? "-" : realmData.optMemo
+            defaultText = memoTextView.text
+            self.navigationController?.isToolbarHidden = false
+        } else {
+            thumbImageView.kf.setImage(with: URL(string: data.thumbnail))
+            titleLabel.text = data.title
+            contentLabel.text = data.contents.isEmpty ? "내용이 없습니다" : data.contents
+            priceLabel.text = "가격 \(data.salePrice)원"
+            memoTextView.text = "-"
+            defaultText = memoTextView.text
+            self.navigationController?.isToolbarHidden = true
+        }
+        
+        configToolbar()
     }
     
     private func configNav() {
@@ -126,6 +188,34 @@ class DetailBookViewController: UIViewController {
         navigationItem.rightBarButtonItem?.tintColor = .red
     }
     
+    @objc func editButtonClicked() {
+        print("수정 버튼 클릭")
+        RealmManager.shared.update(objectType: SearchBook.self) {
+            $0.title == titleLabel.text! && $0.optContents == contentLabel.text!
+        } update: {
+            $0.optMemo = memoTextView.text
+        } complete: { isSuccess in
+            if isSuccess {
+                self.isEditComplete = true
+                self.editToolbarButtonClicked()
+            } else {
+                print(#function, "error")
+            }
+        }
+    }
+    
+    @objc func editToolbarButtonClicked() {
+        print("툴바 수정 클릭")
+        editButton.isHidden = editMode
+        editMode.toggle()
+        memoTextView.isEditable = editMode
+        memoTextView.textColor = editMode ? .blue : .black
+        
+        if !isEditComplete {
+            memoTextView.text = defaultText
+        }
+    }
+    
     @objc func closeButtonClicked() {
         dismiss(animated: true)
     }
@@ -139,9 +229,14 @@ class DetailBookViewController: UIViewController {
         if realmData == nil {
             // 저장되어 있지 않다면 Realm 에서 Add 해주기
             addRealmData(data: data)
+            navigationController?.isToolbarHidden = false
         } else {
             // 현재 저장되어 있는 책이라면 Realm 에서 Delete 해주기
             deleteRealData(realmData: realmData!)
+            navigationController?.isToolbarHidden = true
+            
+            editMode = false
+            editButton.isHidden = true
         }
     }
     
@@ -158,7 +253,9 @@ class DetailBookViewController: UIViewController {
             obj: SearchBook(
                 title: data.title,
                 optContents: data.contents,
-                optThumbnail: data.thumbnail
+                optThumbnail: data.thumbnail,
+                optMemo: nil,
+                optPrice: data.salePrice
             )) { isSuccess in
                 if isSuccess {
                     self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
@@ -172,9 +269,17 @@ class DetailBookViewController: UIViewController {
         RealmManager.shared.delete(obj: realmData) { isSuccess in
             if isSuccess {
                 self.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart")
+                self.memoTextView.text = "-"
             } else {
                 print(#function, "실패")
             }
         }
+    }
+    
+    private func configToolbar() {
+        var items = [UIBarButtonItem]()
+        items.append( UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil) )
+        items.append( UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editToolbarButtonClicked)) )
+        self.toolbarItems = items
     }
 }
