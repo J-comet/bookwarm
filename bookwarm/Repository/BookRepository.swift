@@ -11,7 +11,7 @@ import RealmSwift
 class BookRepository: RealmDataBaseProtocol {
     typealias T = SearchBook
     private let realm = try! Realm()
-    lazy var fileURL = self.realm.configuration.fileURL
+    private lazy var fileURL = self.realm.configuration.fileURL
     
     func fetch(objType: SearchBook.Type) -> Results<SearchBook> {
         return realm.objects(objType.self)
@@ -33,7 +33,6 @@ class BookRepository: RealmDataBaseProtocol {
     }
     
     func update(_ item: SearchBook) {
-        print("item = ", item)
         do {
             try realm.write {
                 realm.create(
@@ -47,4 +46,14 @@ class BookRepository: RealmDataBaseProtocol {
         }
     }
     
+    func delete(_ item: SearchBook) {
+        do {
+            let _ = try realm.write {
+                realm.delete(item)
+                print("DELETE Succeed")
+            }            
+        } catch  {
+            print(#function, "error")
+        }
+    }
 }
