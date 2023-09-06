@@ -140,7 +140,6 @@ final class DetailBookViewController: UIViewController {
         
         let realmData = getRealmBook(data: data)
         if let realmData {
-            
             thumbImageView.backgroundColor = .systemGray5
             
             thumbImageView.image = loadImageToDocument(fileName: "\(realmData._id).jpg")
@@ -194,17 +193,12 @@ final class DetailBookViewController: UIViewController {
     
     @objc func editButtonClicked() {
         print("수정 버튼 클릭")
-        RealmManager.shared.update(objectType: SearchBook.self) {
-            $0.title == titleLabel.text! && $0.optContents == contentLabel.text!
-        } update: {
-            $0.optMemo = memoTextView.text
-        } complete: { isSuccess in
-            if isSuccess {
-                self.isEditComplete = true
-                self.editToolbarButtonClicked()
-            } else {
-                print(#function, "error")
-            }
+        if let remoteData = data, let realmData = getRealmBook(data: remoteData) {
+            repository.update(
+                realmData.copy(optMemo: memoTextView.text!)
+            )
+            self.isEditComplete = true
+            self.editToolbarButtonClicked()
         }
     }
     

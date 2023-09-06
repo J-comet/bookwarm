@@ -44,35 +44,35 @@ class RealmManager {
 //
 //    }
     
-    // 수정
-    func update<T: Object>(
-        objectType: T.Type,
-        _ isIncluded: ((Query<T>) -> Query<Bool>),
-        update: (T) -> Void,
-        complete: ((Bool) -> Void)? = nil
-    ) {
-        print(realm?.configuration.fileURL)
-        guard let realm = realm else { return }
-        
-        let currentItem = realm.objects(T.self).where {
-            isIncluded($0)
-        }.first
-        
-        do {
-            let _ = try realm.write {
-                guard let currentItem else {
-                    print("UPDATE 할 아이템이 존재하지않음")
-                    return
-                }
-                update(currentItem)
-                print("UPDATE Succeed")
-                complete?(true)
-            }
-        } catch  {
-            print(#function, "error")
-            complete?(false)
-        }
-    }
+//    // 수정
+//    func update<T: Object>(
+//        objectType: T.Type,
+//        _ isIncluded: ((Query<T>) -> Query<Bool>),
+//        update: (T) -> Void,
+//        complete: ((Bool) -> Void)? = nil
+//    ) {
+//        print(realm?.configuration.fileURL)
+//        guard let realm = realm else { return }
+//
+//        let currentItem = realm.objects(T.self).where {
+//            isIncluded($0)
+//        }.first
+//
+//        do {
+//            let _ = try realm.write {
+//                guard let currentItem else {
+//                    print("UPDATE 할 아이템이 존재하지않음")
+//                    return
+//                }
+//                update(currentItem)
+//                print("UPDATE Succeed")
+//                complete?(true)
+//            }
+//        } catch  {
+//            print(#function, "error")
+//            complete?(false)
+//        }
+//    }
     
     // 삭제
     func delete(obj: Object, complete: ((Bool) -> Void)? = nil) {
