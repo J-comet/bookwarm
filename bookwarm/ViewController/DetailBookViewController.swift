@@ -9,23 +9,23 @@ import UIKit
 import SnapKit
 import RealmSwift
 
-class DetailBookViewController: UIViewController {
+final class DetailBookViewController: UIViewController {
     
-    let thumbImageView = {
+    private let thumbImageView = {
         let view = UIImageView(frame: .zero)
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         return view
     }()
     
-    let containerView = {
+    private let containerView = {
         let view = UIView()
         view.layer.cornerRadius = 20
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         return view
     }()
     
-    let titleLabel = {
+    private let titleLabel = {
         let view = UILabel()
         view.textColor = .black
         view.font = .monospacedSystemFont(ofSize: 16, weight: .semibold)
@@ -33,7 +33,7 @@ class DetailBookViewController: UIViewController {
         return view
     }()
     
-    let contentLabel = {
+    private let contentLabel = {
         let view = UILabel()
         view.font = .monospacedSystemFont(ofSize: 14, weight: .light)
         view.textColor = .darkGray
@@ -41,14 +41,14 @@ class DetailBookViewController: UIViewController {
         return view
     }()
     
-    let priceLabel = {
+    private let priceLabel = {
         let view = UILabel()
         view.font = .monospacedSystemFont(ofSize: 18, weight: .bold)
         view.textColor = .link
         return view
     }()
     
-    let memoTextView = {
+    private let memoTextView = {
         let view = UITextView()
         view.backgroundColor = .systemGray4
         view.textColor = .black
@@ -57,7 +57,7 @@ class DetailBookViewController: UIViewController {
         return view
     }()
     
-    lazy var editButton = {
+    private lazy var editButton = {
         let view = UIButton()
         var attString = AttributedString("수 정")
         attString.font = .systemFont(ofSize: 14, weight: .bold)
@@ -74,10 +74,12 @@ class DetailBookViewController: UIViewController {
     
     var data: Book?
     
-    var editMode = false
-    var isEditComplete = false
+    private var editMode = false
+    private var isEditComplete = false
     
-    var defaultText = ""
+    private var defaultText = ""
+    
+    private var repository = BookRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -245,30 +247,45 @@ class DetailBookViewController: UIViewController {
     // 저장되어 있는 realm 데이터 가져오는 함수
     private func getRealmBook(data: Book) -> SearchBook? {
         let currentContents = data.contents.isEmpty ? nil : data.contents
-        return RealmManager.shared.filterAll(objectType: SearchBook.self) {
+        return repository.fetchFilter(objType: SearchBook.self) {
             $0.title == data.title && $0.optContents == currentContents
-        }?.first
+        }.first
     }
     
     private func addRealmData(data: Book) {
         let currentContents = data.contents.isEmpty ? nil : data.contents
-        RealmManager.shared.add(
-            obj: SearchBook(
+        repository.create(
+            SearchBook(
                 title: data.title,
                 optContents: currentContents,
                 optMemo: nil,
                 optPrice: data.salePrice
-            )) { [weak self] isSuccess in
-                if isSuccess {
-                    let id = self?.getRealmBook(data: data)?._id
-                    if let id, let image = self?.thumbImageView.image {
-                        self?.saveImageToDocument(fileName: "\(id).jpg", image: image)
-                    }
-                    self?.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
-                } else {
-                    print(#function, "실패")
-                }
-            }
+            )
+        )
+        
+        let id = getRealmBook(data: data)?._id
+        if let id, let image = thumbImageView.image {
+            saveImageToDocument(fileName: "\(id).jpg", image: image)
+        }
+        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+        
+//        RealmManager.shared.add(
+//            obj: SearchBook(
+//                title: data.title,
+//                optContents: currentContents,
+//                optMemo: nil,
+//                optPrice: data.salePrice
+//            )) { [weak self] isSuccess in
+//                if isSuccess {
+//                    let id = self?.getRealmBook(data: data)?._id
+//                    if let id, let image = self?.thumbImageView.image {
+//                        self?.saveImageToDocument(fileName: "\(id).jpg", image: image)
+//                    }
+//                    self?.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "heart.fill")
+//                } else {
+//                    print(#function, "실패")
+//                }
+//            }
     }
     
     private func deleteRealData(realmData: SearchBook) {

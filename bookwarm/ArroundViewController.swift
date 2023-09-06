@@ -15,8 +15,10 @@ class ArroundViewController: UIViewController, BaseViewControllerProtocol {
     
     @IBOutlet var emptyLabel: UILabel!
     
-    var searhList: Results<SearchBook>?
-    var notificationToken: NotificationToken?
+    private var searhList: Results<SearchBook>?
+    private var notificationToken: NotificationToken?
+    
+    private var repository = BookRepository()
     
     deinit {
         // 노티피케이션 제거
@@ -31,16 +33,16 @@ class ArroundViewController: UIViewController, BaseViewControllerProtocol {
         
         headerCollectionView.alwaysBounceHorizontal = true
         
-        let tasks = RealmManager.shared.all(objectType: SearchBook.self)
-        self.searhList = tasks?.sorted(byKeyPath: "saveDate", ascending: false)
+        // 전체 리스트
+//        let tasks = repository.fetch(objType: SearchBook.self)
         
         // 필터링 후 리스트
-        let filters = RealmManager.shared.filterAll(objectType: SearchBook.self) {
-            $0.title == "하하"
-        }
-//        self.searhList = filters
+        let filters = repository.fetchFilter(objType: SearchBook.self) {
+            $0.optContents != nil
+        }.sorted(byKeyPath: "saveDate", ascending: false)
         
-        realmResultsObserve(tasks: tasks)
+        // 옵저빙 추가
+        realmResultsObserve(tasks: filters)
     }
     
     // realm 값 변화 옵저빙
@@ -50,6 +52,7 @@ class ArroundViewController: UIViewController, BaseViewControllerProtocol {
         notificationToken = tasks?.observe { [weak self] changes in
             switch changes {
             case .initial:
+                self?.searhList = tasks
                 self?.emptyLabel.isHidden = ((self?.searhList?.count ?? 0) != 0) ? true : false
                 self?.headerCollectionView.reloadData()
             case .update(_, let deletions, let insertions, let modifications):
@@ -57,6 +60,7 @@ class ArroundViewController: UIViewController, BaseViewControllerProtocol {
                 print("Deleted indices: ", deletions)
                 print("Inserted indices: ", insertions)
                 print("Modified modifications: ", modifications)
+                self?.searhList = tasks
                 self?.emptyLabel.isHidden = ((self?.searhList?.count ?? 0) != 0) ? true : false
                 self?.headerCollectionView.reloadData()
             case .error(let error):
