@@ -9,27 +9,42 @@ import Foundation
 import RealmSwift
 
 class BookRepository: RealmDataBaseProtocol {
-    
     typealias T = SearchBook
     private let realm = try! Realm()
+    lazy var fileURL = self.realm.configuration.fileURL
     
     func fetch(objType: SearchBook.Type) -> Results<SearchBook> {
         return realm.objects(objType.self)
     }
     
     func fetchFilter(objType: SearchBook.Type, _ isIncluded: ((Query<T>) -> Query<Bool>)) -> Results<SearchBook> {
+        print(fileURL)
         return realm.objects(objType.self).where { isIncluded($0) }
     }
     
-    func create(_ obj: SearchBook) {
+    func create(_ item: SearchBook) {
         do {
             try realm.write {
-                realm.add(obj)
+                realm.add(item)
             }
         } catch {
             print(#function, "ERROR")
         }
     }
     
+    func update(_ item: SearchBook) {
+        print("item = ", item)
+        do {
+            try realm.write {
+                realm.create(
+                    SearchBook.self,
+                    value: item,
+                    update: .modified
+                )
+            }
+        } catch {
+            print(#function, "error")
+        }
+    }
     
 }
