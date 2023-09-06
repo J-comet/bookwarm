@@ -205,7 +205,9 @@ extension ArroundViewController: UICollectionViewDataSource, UICollectionViewDel
 //        }
         
         // 삭제 - 객체로
-        RealmManager.shared.delete(obj: row)
+//        RealmManager.shared.delete(obj: row)
+        
+        repository.delete(row)
         
         //        moveDetailVC(row: MovieInfo.list[indexPath.row])
     }

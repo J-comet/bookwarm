@@ -14,4 +14,5 @@ protocol RealmDataBaseProtocol {
     func fetchFilter(objType: T.Type, _ isIncluded: ((Query<T>) -> Query<Bool>)) -> Results<T>
     func create(_ item: T)
     func update(_ item: T)
+    func delete(_ item: T)
 }
