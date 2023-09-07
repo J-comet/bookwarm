@@ -43,6 +43,10 @@ class ArroundViewController: UIViewController, BaseViewControllerProtocol {
         
         // 옵저빙 추가
         realmResultsObserve(tasks: filters)
+        
+        print(filters)
+        
+        repository.checkSchemaVersion()
     }
     
     // realm 값 변화 옵저빙

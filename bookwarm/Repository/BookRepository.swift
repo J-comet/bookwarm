@@ -13,6 +13,15 @@ class BookRepository: RealmDataBaseProtocol {
     private let realm = try! Realm()
     private lazy var fileURL = self.realm.configuration.fileURL
     
+    func checkSchemaVersion() {
+        do {
+            let version = try schemaVersionAtURL(realm.configuration.fileURL!)
+            print("Schema Version: \(version)")
+        } catch {
+            print(error)
+        }
+    }
+    
     func fetch(objType: SearchBook.Type) -> Results<SearchBook> {
         return realm.objects(objType.self)
     }

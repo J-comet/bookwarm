@@ -15,6 +15,8 @@ class SearchBook: Object {
     @Persisted var optContents: String?     // optional
     @Persisted var optMemo: String?     // optional
     @Persisted var optPrice: Int?     // optional
+    @Persisted var master: String
+    @Persisted var info: String
     
     convenience init(
         title: String,
@@ -28,6 +30,7 @@ class SearchBook: Object {
         self.optContents = optContents
         self.optMemo = optMemo
         self.optPrice = optPrice
+        self.master = "저자"
     }
     
     // copy(), 대응하기 위한 함수 기존 init 으로는 ObjectId 가 새로 생겨서 수정시에 새로운 데이터가 추가되는 오류 대응
@@ -46,6 +49,7 @@ class SearchBook: Object {
         self.optContents = optContents
         self.optMemo = optMemo
         self.optPrice = optPrice
+        self.master = "저자"
     }
     
     //TODO: 구조체 복사 -> 모든 구조체에 사용할 수 있도록 프로토콜 or 익스텐션으로 만드는 방법??
